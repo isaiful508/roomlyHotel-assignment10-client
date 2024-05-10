@@ -11,6 +11,7 @@ import MyBookings from "../pages/MyBookings/MyBookings";
 import ContactUs from './../pages/ContactUs/ContactUs';
 import AboutUs from './../pages/AboutUs/AboutUs';
 import Login from "../pages/Authentication/Login";
+import Register from "../pages/Authentication/Register";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login></Login>
+            },
+            {
+                path:'/register',
+                element:<Register></Register>
             }
 
         ]

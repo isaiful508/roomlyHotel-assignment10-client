@@ -1,13 +1,14 @@
+import { Link } from "react-router-dom";
 
 
 const Login = () => {
     return (
-        <section className="bg-white dark:bg-gray-900">
-            <div className="container flex items-center justify-center min-h-screen px-6 mx-auto">
+        <section className="bg-white mt-6 dark:bg-gray-900">
+            <div className="container flex  justify-center min-h-screen px-6 mx-auto">
                 <form className="w-full max-w-md">
                     <img className="w-auto h-7 sm:h-8" src="" alt="" />
 
-                    <h1 className="mt-3 text-3xl font-bold text-gray-800 text-center capitalize sm:text-3xl dark:text-white jost-600">Log In</h1>
+                    <h1 className="mt-3 text-3xl font-bold text-gray-800 text-center capitalize sm:text-3xl dark:text-white jost-600">Log In Here !</h1>
 
                     <div className="relative flex items-center mt-8">
                         <span className="absolute">
@@ -30,9 +31,10 @@ const Login = () => {
                     </div>
 
                     <div className="mt-6">
-                        <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">Sign in</button>
+                        
+                        <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#3665b8] rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 font-500 focus:ring-opacity-50">Sign in</button>
 
-                        <p className="mt-4 text-center text-gray-600 dark:text-gray-400">or sign in with</p>
+                        <p className="mt-4 text-center text-gray-600 dark:text-gray-400 font-500">or sign in with</p>
 
                         <a href="#" className="flex items-center justify-center px-6 py-3 mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <svg className="w-6 h-6 mx-2" viewBox="0 0 40 40">
@@ -42,13 +44,11 @@ const Login = () => {
                                 <path d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.7592 25.1975 27.56 26.805 26.0133 27.9758C26.0142 27.975 26.015 27.975 26.0158 27.9742L31.1742 32.3392C30.8092 32.6708 36.6667 28.3333 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z" fill="#1976D2" />
                             </svg>
 
-                            <span className="mx-2">Sign in with Google</span>
+                            <span className="mx-2 font-500">Sign in with Google</span>
                         </a>
 
-                        <div className="mt-6 text-center ">
-                            <a href="#" className="text-sm text-blue-500 hover:underline dark:text-blue-400">
-                                Don’t have an account yet? Sign up
-                            </a>
+                        <div className="mt-6 text-center font-500">
+                        <p className="text-center mt-2 poppins-medium">Do not Have An Account ? <Link className="text-red-500" to='/register'>Please Register</Link></p>
                         </div>
                     </div>
                 </form>
