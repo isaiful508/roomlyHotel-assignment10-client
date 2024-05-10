@@ -37,6 +37,12 @@
 /* jost google font */
 
 
+.jost-400 {
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
 .jost-600 {
   font-family: "Jost", sans-serif;
   font-optical-sizing: auto;
