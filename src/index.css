@@ -1,9 +1,14 @@
 /* Space Grotesk google font */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
+/* jost font */
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* bona nova font */
+@import url('https://fonts.googleapis.com/css2?family=Bona+Nova:ital,wght@0,400;0,700;1,400&display=swap');
 
+
+/* Space Grotesk */
 .font-400 {
   font-family: "Space Grotesk", sans-serif;
   font-optical-sizing: auto;
@@ -37,6 +42,25 @@
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
+}
+
+/* bona-nova */
+.bona-nova-regular {
+  font-family: "Bona Nova", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.bona-nova-bold {
+  font-family: "Bona Nova", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.bona-nova-regular-italic {
+  font-family: "Bona Nova", serif;
+  font-weight: 400;
+  font-style: italic;
 }
 
 

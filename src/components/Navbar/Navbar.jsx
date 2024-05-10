@@ -111,7 +111,7 @@ const Navbar = () => {
                         </div> :
 
                         <div className="flex gap-2">
-                            <Link to='/login' className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 bg-[#3665b8] font-600" > Sign In</Link>
+                            <Link to='/login' className="px-6 py-2 font-medium tracking-wide border border-[#ff4338] text-[#ff4338]  hover:text-white capitalize transition-colors duration-300 transform    hover:bg-[#ff4338] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80  font-600" > Sign In</Link>
 
 
                         </div>

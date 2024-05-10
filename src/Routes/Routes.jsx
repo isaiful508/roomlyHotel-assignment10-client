@@ -13,6 +13,7 @@ import AboutUs from './../pages/AboutUs/AboutUs';
 import Login from "../pages/Authentication/Login";
 import Register from "../pages/Authentication/Register";
 import PrivateRoutes from "./PrivateRoutes";
+import RoomDetails from "../pages/RoomDetails/RoomDetails";
 
 const router = createBrowserRouter([
     {
@@ -49,6 +50,11 @@ const router = createBrowserRouter([
             {
                 path:'/register',
                 element:<Register></Register>
+            },
+            {
+                path:'/room-details/:id',
+                element:<RoomDetails></RoomDetails>,
+                loader : ({params}) => fetch(`${import.meta.env.VITE_API_URL}/room-details/${params.id}`)
             }
 
         ]

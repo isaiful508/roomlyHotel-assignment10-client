@@ -19,7 +19,7 @@ const Rooms = () => {
 
     return (
         <div>
-           <div className=" grid border-2 border-[] rounded-lg p-4  md:gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+           <div className=" grid border-2 border-[] rounded-lg p-4  md:gap-8  grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {
                 rooms.map(room => <RoomsCard
                 key={room._id}

@@ -128,7 +128,7 @@ const Login = () => {
                     <div className="mt-6">
 
                         <button 
-                        className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#3665b8] rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 font-500 focus:ring-opacity-50">Sign in</button>
+                        className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#3665b8]  hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 font-500 focus:ring-opacity-50">Sign in</button>
 
                         <p className="mt-4 text-center text-gray-600 dark:text-gray-400 font-500">or sign in with</p>
 
