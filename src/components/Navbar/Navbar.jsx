@@ -29,8 +29,7 @@ const Navbar = () => {
                         </div>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
 
-                            <NavLink to='/'
-                                className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>Home</NavLink>
+                           
 
 
                             <NavLink to='/rooms'
@@ -46,20 +45,19 @@ const Navbar = () => {
                     </div>
                     <div className="flex items-center">
                         <img className="w-10" src="" alt="" />
-                        <a className="btn btn-ghost   font-700 lg:text-3xl text-xl font-700">Roomly</a>
+                        <Link to='/' className="btn btn-ghost   font-700 lg:text-3xl text-xl font-700">Roomly</Link>
                     </div>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu  flex items-center space-x-6 menu-horizontal px-1">
-                        <NavLink to='/'
-                            className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>Home</NavLink>
+                      
 
 
                         <NavLink to='/rooms'
                             className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>Rooms</NavLink>
 
                         <NavLink to='/my-bookings'
-                            className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>My Bookings</NavLink>
+                            className={({ isActive }) => isActive ? 'text-[#3665b8]  rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>My Bookings</NavLink>
                         <NavLink to='/about-us'
                             className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>About Us</NavLink>
                         <NavLink to='/contact-us'

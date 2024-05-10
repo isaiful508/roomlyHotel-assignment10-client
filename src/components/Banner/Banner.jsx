@@ -7,23 +7,24 @@ import 'swiper/css';
 import 'swiper/css/effect-cards';
 // import required modules
 import { EffectCards } from 'swiper/modules';
-
+import { Autoplay, Pagination} from 'swiper/modules';
 
 
 
 const Banner = () => {
     return (
-        <div className=' container  mx-auto'>
+        <div className=' container mx-auto'>
              <Swiper
         effect={'cards'}
         // grabCursor={true}
-        modules={[EffectCards]}
+        modules={[EffectCards, Autoplay, Pagination]}
         loop={true}
 
         autoplay={{
-          delay: 2000,
+          delay: 2500,
           disableOnInteraction: false,
         }}
+       
 
         className="mySwiper"
       >

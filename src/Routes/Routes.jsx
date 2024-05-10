@@ -25,7 +25,8 @@ const router = createBrowserRouter([
             },
             {
                 path:'/rooms',
-                element:<Rooms></Rooms>
+                element:<Rooms></Rooms>,
+                
             },
             {
                 path:'/my-bookings',
