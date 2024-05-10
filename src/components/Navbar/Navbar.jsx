@@ -1,7 +1,23 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
 
 
 const Navbar = () => {
+
+    const { user, logOut } = useContext(AuthContext);
+ 
+
+    const handleSignOut = () => {
+        logOut()
+            .then()
+            .catch(error => {
+                // Handle sign out error
+                console.error('Sign out error:', error);
+            });
+    }
+
+
     return (
         <div>
 
@@ -13,23 +29,23 @@ const Navbar = () => {
                         </div>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
 
-                        <NavLink to='/'
-                            className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>Home</NavLink>
+                            <NavLink to='/'
+                                className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>Home</NavLink>
 
 
-                        <NavLink to='/rooms'
-                            className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>Rooms</NavLink>
+                            <NavLink to='/rooms'
+                                className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>Rooms</NavLink>
 
-                        <NavLink to='/my-bookings'
-                            className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>My Bookings</NavLink>
-                        <NavLink to='/about-us'
-                            className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>About Us</NavLink>
-                        <NavLink to='/contact-us'
-                            className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>Contact Us</NavLink>
+                            <NavLink to='/my-bookings'
+                                className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>My Bookings</NavLink>
+                            <NavLink to='/about-us'
+                                className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>About Us</NavLink>
+                            <NavLink to='/contact-us'
+                                className={({ isActive }) => isActive ? 'text-[#3665b8] poppins-medium rounded-lg border-2 p-2 border-[#3665b8] font-600' : 'font-500'}>Contact Us</NavLink>
                         </ul>
                     </div>
                     <div className="flex items-center">
-                        <img className="w-10" src=""  alt="" />
+                        <img className="w-10" src="" alt="" />
                         <a className="btn btn-ghost   font-700 lg:text-3xl text-xl font-700">Roomly</a>
                     </div>
                 </div>
@@ -63,41 +79,47 @@ const Navbar = () => {
                     </div>
 
 
-                    <div className='dropdown dropdown-end z-50'>
-                        <div
-                            tabIndex={0}
-                            role='button'
-                            className='btn btn-ghost btn-circle avatar'
-                        >
-                            <div className='w-10 rounded-full' title=''>
-                                <img
-                                    referrerPolicy='no-referrer'
-                                    alt='User Profile Photo'
-                                    src=''
-                                />
+                    {user ?
+                        <div className='dropdown dropdown-end z-50'>
+                            <div
+                                tabIndex={0}
+                                role='button'
+                                className='btn btn-ghost btn-circle avatar'
+                            >
+                                <div className='w-10 rounded-full' title=''>
+                                    <img
+                                        referrerPolicy='no-referrer'
+                                        alt='User Profile Photo'
+                                        src={user?.
+                                            photoURL}
+                                    />
+                                </div>
                             </div>
+                            <ul
+                                tabIndex={0}
+                                className='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'
+                            >
+                                <li>
+                                    <button className="btn  btn-sm  btn-ghost">{user?.displayName || 'user name not found'}</button>
+
+                                </li>
+                                <li>
+                                    <button
+                                        onClick={logOut}
+                                        className="btn btn-sm btn-ghost">Sign Out</button>
+
+                                </li>
+                            </ul>
+                        </div> :
+
+                        <div className="flex gap-2">
+                            <Link to='/login' className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 bg-[#3665b8] font-600" > Sign In</Link>
+
+
                         </div>
-                        <ul
-                            tabIndex={0}
-                            className='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'
-                        >
-                            
-                            <li>
-                                <div>My Bookings</div>
-                            </li>
-                            
-                            
-                            <li className='mt-2'>
-                                <button className='bg-gray-200 block text-center'>Logout</button>
-                            </li>
-                        </ul>
-                    </div>
+                    }
 
-                    <div className="flex gap-2">
-                        <Link to='/login' className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 bg-[#3665b8] font-600" > Login</Link>
 
-                       
-                    </div>
 
                 </div>
 

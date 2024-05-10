@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { updateProfile } from "firebase/auth";
 // import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { AuthContext } from "../../provider/AuthProvider";
@@ -9,7 +9,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const Register = () => {
-  const { createUser, logOut } = useContext(AuthContext)
+  const { createUser, signOut } = useContext(AuthContext)
 
   const [passwordError, setPasswordError] = useState("");
 
@@ -61,7 +61,7 @@ const Register = () => {
       .then(result => {
         console.log(result.user)
         toast.success('Registration Successfully');
-        logOut();
+        signOut();
         navigate("/login");
 
 

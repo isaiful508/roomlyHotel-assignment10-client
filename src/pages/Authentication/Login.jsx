@@ -1,11 +1,74 @@
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
+import toast from "react-hot-toast";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const Login = () => {
+
+    const { signIn,
+            signInWithGoogle
+    } = useContext(AuthContext);
+
+    const [user, setUser] = useState(null);
+    const [loginError, setLoginError] = useState("");
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const location = useLocation();
+    const navigate = useNavigate()
+    // console.log('in login page location',location);
+
+
+    const handleSignin = e => {
+        e.preventDefault();
+
+        const form = new FormData(e.currentTarget);
+
+        const email = form.get('email');
+        const password = form.get('password');
+        console.log(email, password);
+
+        setLoginError("")
+
+        signIn(email, password)
+            .then(result => {
+                console.log(result.user)
+
+                toast.success("Login Successfully")
+
+                navigate(location?.state ? location.state : '/');
+
+                //navigate after login
+            })
+            .catch(error => {
+                console.error(error)
+
+                if (error.code === "auth/invalid-credential" || error.code === "auth/user-not-found") {
+                    // Show error message for incorrect email or password
+                    setLoginError("Incorrect email or password. Please try again.");
+                }
+
+
+
+            })
+
+    }
+
+
+
+
+
+
+
+
     return (
         <section className="bg-white mt-6 dark:bg-gray-900">
+
             <div className="container flex  justify-center min-h-screen px-6 mx-auto">
-                <form className="w-full max-w-md">
+
+                <form onSubmit={handleSignin} className="w-full max-w-md">
                     <img className="w-auto h-7 sm:h-8" src="" alt="" />
 
                     <h1 className="mt-3 text-3xl font-bold text-gray-800 text-center capitalize sm:text-3xl dark:text-white jost-600">Log In Here !</h1>
@@ -17,7 +80,9 @@ const Login = () => {
                             </svg>
                         </span>
 
-                        <input type="email" className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address" />
+                        <input type="email" 
+                        name="email"
+                        className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address" />
                     </div>
 
                     <div className="relative flex items-center mt-4">
@@ -27,11 +92,28 @@ const Login = () => {
                             </svg>
                         </span>
 
-                        <input type="password" className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password" />
+                        <input 
+                       type={showPassword ? "text" : "password"}
+                       name="password"
+                        
+                        className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password" />
+
+                        <span className="absolute top-4 right-4" onClick={() => setShowPassword(!showPassword)}>
+                        {
+                            showPassword ? <FaEyeSlash className="text-xl"></FaEyeSlash> : <FaEye className="text-xl"></FaEye>
+                        }
+                    </span>
+
+
+
                     </div>
 
+                    {
+                    loginError && <p className="text-red-700 font-500">{loginError}</p>
+                }
+
                     <div className="mt-6">
-                        
+
                         <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#3665b8] rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 font-500 focus:ring-opacity-50">Sign in</button>
 
                         <p className="mt-4 text-center text-gray-600 dark:text-gray-400 font-500">or sign in with</p>
@@ -48,7 +130,7 @@ const Login = () => {
                         </a>
 
                         <div className="mt-6 text-center font-500">
-                        <p className="text-center mt-2 poppins-medium">Do not Have An Account ? <Link className="text-red-500" to='/register'>Please Register</Link></p>
+                            <p className="text-center mt-2 poppins-medium">Do not Have An Account ? <Link className="text-red-500" to='/register'>Please Register</Link></p>
                         </div>
                     </div>
                 </form>
