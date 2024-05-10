@@ -12,6 +12,7 @@ import ContactUs from './../pages/ContactUs/ContactUs';
 import AboutUs from './../pages/AboutUs/AboutUs';
 import Login from "../pages/Authentication/Login";
 import Register from "../pages/Authentication/Register";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
     {
@@ -28,7 +29,9 @@ const router = createBrowserRouter([
             },
             {
                 path:'/my-bookings',
-                element:<MyBookings></MyBookings>
+                element:<PrivateRoutes>
+                    <MyBookings></MyBookings>
+                </PrivateRoutes>
             },
             {
                 path:'/about-us',
