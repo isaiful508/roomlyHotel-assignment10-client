@@ -28,13 +28,13 @@ const Login = () => {
 
         const email = form.get('email');
         const password = form.get('password');
-        console.log(email, password);
+        // console.log(email, password);
 
         setLoginError("")
 
         signIn(email, password)
-            .then(result => {
-                console.log(result.user)
+            .then(() => {
+                // console.log(result.user)
 
                 toast.success("Login Successfully")
 
@@ -60,7 +60,7 @@ const Login = () => {
     // Google Signin
     const handleGoogleLogin = () => {
         loginWithGoogle()
-            .then(result => {
+            .then((result) => {
                 setUser(result.user)
                 // console.log(result.user)                
                 toast.success("Login Successfully")

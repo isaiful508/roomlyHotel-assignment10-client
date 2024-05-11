@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../../provider/AuthProvider";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 
@@ -53,6 +54,13 @@ const RoomDetails = () => {
        try{
         const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/bookings`, booking)
         console.log(data);
+        Swal.fire({
+            icon: 'success',
+            title: 'Booking Confirmed!',
+            text: 'Your booking has been successfully confirmed.',
+            showConfirmButton: false,
+            timer: 1500 
+        });
         
        } catch(err) {
         console.log(err);
@@ -91,7 +99,11 @@ const RoomDetails = () => {
                     <div>
                         
                             <label htmlFor="">Booking Date : </label>
-                            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+                            {/* <input type="date" name="date" className="input input-bordered" /> */}
+                            <DatePicker
+                             selected={startDate}
+                             dateFormat="MMMM d, yyyy"
+                              onChange={(date)=> setStartDate(date)} />
                         
                     </div>
 
@@ -111,18 +123,17 @@ const RoomDetails = () => {
 
                     <Modal show={openModal} onClose={() => setOpenModal(false)}>
 
-                        <Modal.Header>Terms of Service</Modal.Header>
+                        <Modal.Header>Booking Summary : </Modal.Header>
                         <Modal.Body>
                             <div className="space-y-6">
+                                <h2 className="text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
+                                    {description}
+                                </h2>
                                 <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                    With less than a month to go before the European Union enacts new consumer privacy laws for its citizens,
-                                    companies around the world are updating their terms of service agreements to comply.
+                                    {pricePerNight} $ Per Night
                                 </p>
-                                <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant
-                                    to ensure a common set of data rights in the European Union. It requires organizations to notify users as
-                                    soon as possible of high-risk data breaches that could personally affect them.
-                                </p>
+                                <p>Booked For : {startDate.toDateString}</p>
+
                             </div>
                         </Modal.Body>
 

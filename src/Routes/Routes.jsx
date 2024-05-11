@@ -14,11 +14,13 @@ import Login from "../pages/Authentication/Login";
 import Register from "../pages/Authentication/Register";
 import PrivateRoutes from "./PrivateRoutes";
 import RoomDetails from "../pages/RoomDetails/RoomDetails";
+import Error from "../ErrorPage/Error";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayouts></MainLayouts>,
+        errorElement: <Error></Error>,
         children: [
             {
                 index: true,

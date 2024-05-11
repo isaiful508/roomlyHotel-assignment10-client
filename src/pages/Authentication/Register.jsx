@@ -28,7 +28,7 @@ const Register = () => {
     const photo = form.get('photo');
     const password = form.get('password');
     const confirmPassword = form.get('confirmPassword');
-    console.log(name, email, photo, password, confirmPassword)
+    // console.log(name, email, photo, password, confirmPassword)
 
 
     setPasswordError("")
@@ -58,8 +58,8 @@ const Register = () => {
 
     //create user
     createUser(email, password)
-      .then(result => {
-        console.log(result.user)
+      .then((result) => {
+        // console.log(result.user)
         toast.success('Registration Successfully');
         signOut();
         navigate("/login");
@@ -72,7 +72,9 @@ const Register = () => {
           photoURL: photo
 
         })
-          .then(() => console.log('profile update'))
+          .then(() =>{
+            
+          } )
           .catch()
 
 
