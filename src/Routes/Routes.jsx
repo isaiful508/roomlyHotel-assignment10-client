@@ -25,36 +25,38 @@ const router = createBrowserRouter([
                 element: <Home></Home>
             },
             {
-                path:'/rooms',
-                element:<Rooms></Rooms>,
-                
+                path: '/rooms',
+                element: <Rooms></Rooms>,
+
             },
             {
-                path:'/my-bookings',
-                element:<PrivateRoutes>
+                path: '/my-bookings',
+                element: <PrivateRoutes>
                     <MyBookings></MyBookings>
                 </PrivateRoutes>
             },
             {
-                path:'/about-us',
-                element:<AboutUs></AboutUs>
+                path: '/about-us',
+                element: <AboutUs></AboutUs>
             },
             {
-                path:'/contact-us',
-                element:<ContactUs></ContactUs>
+                path: '/contact-us',
+                element: <ContactUs></ContactUs>
             },
             {
                 path: '/login',
                 element: <Login></Login>
             },
             {
-                path:'/register',
-                element:<Register></Register>
+                path: '/register',
+                element: <Register></Register>
             },
             {
-                path:'/room-details/:id',
-                element:<RoomDetails></RoomDetails>,
-                loader : ({params}) => fetch(`${import.meta.env.VITE_API_URL}/room-details/${params.id}`)
+                path: '/room-details/:id',
+                element: <PrivateRoutes>
+                    <RoomDetails></RoomDetails>
+                </PrivateRoutes>,
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/room-details/${params.id}`)
             }
 
         ]

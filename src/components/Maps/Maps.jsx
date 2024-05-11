@@ -14,12 +14,12 @@ const Maps = () => {
 
                 <div className="flex mt-6 gap-4 text-[#eb865e]">
                     <div>
-                        <MdOutlineFlightLand></MdOutlineFlightLand>
+                        <MdOutlineFlightLand className="text-3xl mb-2"></MdOutlineFlightLand>
                         <h5 className="font-500">31 KILOMETRES FROM AIRPORT</h5>
                         <p className="font-400">The drive from The Airport to Hoteller Suites takes approximately 35 minutes.</p>
                     </div>
                     <div>
-                        <RiHotelLine></RiHotelLine>
+                        <RiHotelLine className="text-3xl mb-2"></RiHotelLine>
                         <h5 className="font-500">1.3 KILOMETRES FROM City Center</h5>
                         <p className="font-400">The drive from the city center to Hoteller Suites takes approximately 10 minutes.</p>
                     </div>
