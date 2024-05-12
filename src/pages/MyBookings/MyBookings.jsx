@@ -6,6 +6,7 @@ import { FaDollarSign } from "react-icons/fa";
 import { TiDeleteOutline } from "react-icons/ti";
 import { FaRegEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { Button, Modal } from "flowbite-react";
 
 
 
@@ -15,6 +16,7 @@ const MyBookings = () => {
 
     const { user } = useContext(AuthContext);
     const [booking, setBooking] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
     
 
 
@@ -117,6 +119,31 @@ const MyBookings = () => {
                         ))}
                     </tbody>
                 </table>
+                <Modal show={openModal} onClose={() => setOpenModal(false)}>
+
+                        <Modal.Header>Booking Summary : </Modal.Header>
+                        <Modal.Body>
+                            <div className="space-y-6">
+                                <h2 className="text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
+                                    Date
+                                </h2>
+                                <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                   
+                                </p>
+                                <p>Booked For : </p>
+
+                            </div>
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                            <Button>Confirm</Button>
+
+                            <Button color="gray" onClick={() => setOpenModal(false)}>
+                                Close
+                            </Button>
+                        </Modal.Footer>
+
+                    </Modal>
             </div>
         </div>
     );
