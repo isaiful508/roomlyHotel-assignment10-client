@@ -54,6 +54,8 @@ const RoomDetails = () => {
        try{
         const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/bookings`, booking)
         console.log(data);
+        // await axios.put(`${import.meta.env.VITE_API_URL}/room-details/${_id}`, {}); // Update room availability
+       
         Swal.fire({
             icon: 'success',
             title: 'Booking Confirmed!',
@@ -65,6 +67,43 @@ const RoomDetails = () => {
        } catch(err) {
         console.log(err);
        }
+    
+    // try {
+    //     const response = await axios.post(`${import.meta.env.VITE_API_URL}/bookings`, booking);
+    //     if (response.status === 201) {
+    //         console.log("Booking successfully created");
+    //         // Handle success notification
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Booking Confirmed!',
+    //             text: 'Your booking has been successfully confirmed.',
+    //             showConfirmButton: false,
+    //             timer: 1500
+    //         });
+    //     } else {
+    //         // Handle error cases
+    //         console.error("Failed to create booking:", response.statusText);
+    //         // Show error notification
+    //         Swal.fire({
+    //             icon: 'error',
+    //             title: 'Booking Failed',
+    //             text: 'Failed to create booking. Please try again later.',
+    //             showConfirmButton: false,
+    //             timer: 1500
+    //         });
+    //     }
+    // } catch (error) {
+    //     console.error("Failed to create booking:", error);
+    //     // Show error notification
+    //     Swal.fire({
+    //         icon: 'error',
+    //         title: 'Booking Failed',
+    //         text: 'Failed to create booking. Please try again later.',
+    //         showConfirmButton: false,
+    //         timer: 1500
+    //     });
+    // }
+
 
     }
     
@@ -132,7 +171,7 @@ const RoomDetails = () => {
                                 <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                                     {pricePerNight} $ Per Night
                                 </p>
-                                <p>Booked For : {startDate.toDateString}</p>
+                                <p>Booked For : {startDate.toDateString()}</p>
 
                             </div>
                         </Modal.Body>

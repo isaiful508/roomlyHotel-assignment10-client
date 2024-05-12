@@ -3,25 +3,60 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import axios from "axios";
 import { FaDollarSign } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { TiDeleteOutline } from "react-icons/ti";
+import { FaRegEdit } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 
 const MyBookings = () => {
 
     const { user } = useContext(AuthContext);
     const [booking, setBooking] = useState([]);
+    
 
 
     useEffect(() => {
+        
         const getData = async () => {
             const { data } = await axios(`${import.meta.env.VITE_API_URL}/bookings/${user?.email}`)
             setBooking(data);
         }
 
-
-        getData()
+        getData();
+        
     }, [user])
     // console.log(booking);
+
+    const handleCancel = (id) =>{
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#FFB400",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`${import.meta.env.VITE_API_URL}/bookings/${id}`)
+                    .then(response => {
+                        const { data } = response;
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            setBooking(prevBookings => prevBookings.filter(booking => booking._id !== id));
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error deleting booking:', error);
+                    });
+            }
+        })
+    }
 
 
 
@@ -43,6 +78,7 @@ const MyBookings = () => {
                             <th className="px-4 py-2">Date</th>
                             <th className="px-4 py-2">Cancel</th>
                             <th className="px-4 py-2">Update</th>
+                            <th className="px-4 py-2">Post Review</th>
                         </tr>
                     </thead>
                     <tbody className="sora-400">
@@ -53,13 +89,17 @@ const MyBookings = () => {
                                 <td className="border px-4 py-2">{item.
                                     roomDetails}</td>
                                 <td className="border px-4 py-2 flex items-center">{item.price} <FaDollarSign></FaDollarSign> </td>
-                                <td className="border px-4 py-2">{item.
-                                    date}</td>
-                                <td className="border px-4 py-2">{item.stockStatus}</td>
+                                <td className="border px-4 py-2">{new Date(item.date).toLocaleDateString()}</td>
+
+                                <td className="border px-4 py-2 ">
+                                  <TiDeleteOutline onClick={()=> handleCancel(item._id)} className="text-2xl "></TiDeleteOutline>
+                                    
+                                    </td>
                                 <td className="border px-4 py-2">
-                                    <Link to={`/view_details/${item._id}`}>
-                                        <button className="link">View Details</button>
-                                    </Link>
+                                   <FaRegEdit></FaRegEdit>
+                                </td>
+                                <td className="border px-4 py-2">
+                                <button className="link">Post</button>
                                 </td>
                             </tr>
                         ))}
