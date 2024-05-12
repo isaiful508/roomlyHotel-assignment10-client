@@ -8,7 +8,10 @@ import { FaRegEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 
+
 const MyBookings = () => {
+
+    
 
     const { user } = useContext(AuthContext);
     const [booking, setBooking] = useState([]);
@@ -17,25 +20,25 @@ const MyBookings = () => {
 
     useEffect(() => {
         
-        const getData = async () => {
-            const { data } = await axios(`${import.meta.env.VITE_API_URL}/bookings/${user?.email}`)
-            setBooking(data);
-        }
-
+        
         getData();
         
     }, [user])
-    // console.log(booking);
+    const getData = async () => {
+        const { data } = await axios(`${import.meta.env.VITE_API_URL}/bookings/${user?.email}`)
+        setBooking(data);
+    }
 
+    // console.log(booking);
     const handleCancel = (id) =>{
         Swal.fire({
-            title: "Are you sure?",
+            title: "Are you sure want to cancel?",
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#FFB400",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes, Cancel it!"
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`${import.meta.env.VITE_API_URL}/bookings/${id}`)
@@ -43,19 +46,28 @@ const MyBookings = () => {
                         const { data } = response;
                         console.log(data);
                         if (data.deletedCount > 0) {
-                            setBooking(prevBookings => prevBookings.filter(booking => booking._id !== id));
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                icon: "success"
-                            });
+                            axios.patch(`${import.meta.env.VITE_API_URL}/room-details/${id}`, { availability: 'Available' })
+                                .then(updateResponse => {
+                                    const { data: updateData } = updateResponse;
+                                    console.log(updateData);
+                                    // for refreshing UI
+                                    getData();
+                                    Swal.fire({
+                                        title: "Canceled!",
+                                        text: "Your booking has been canceled.",
+                                        icon: "success"
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Error updating room details:', error);
+                                });
                         }
                     })
                     .catch(error => {
                         console.error('Error deleting booking:', error);
                     });
             }
-        })
+        });
     }
 
 

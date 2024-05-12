@@ -34,7 +34,7 @@ const RoomDetails = () => {
     } = room || {};
 
 
-    const handleBookRoom =  async (e) => {
+    const handleBookRoom = async (e) => {
         e.preventDefault();
         setOpenModal(false)
         const bookingDate = startDate;
@@ -44,73 +44,40 @@ const RoomDetails = () => {
             customerName: user?.displayName,
             customerEmail: user?.email,
             roomName: name,
-            roomDetails : description,
+            roomDetails: description,
             price: pricePerNight,
             date: bookingDate,
             photo: image,
 
         }
 
-       try{
-        const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/bookings`, booking)
-        console.log(data);
-        // await axios.put(`${import.meta.env.VITE_API_URL}/room-details/${_id}`, {}); // Update room availability
-       
-        Swal.fire({
-            icon: 'success',
-            title: 'Booking Confirmed!',
-            text: 'Your booking has been successfully confirmed.',
-            showConfirmButton: false,
-            timer: 1500 
-        });
-        
-       } catch(err) {
-        console.log(err);
-       }
-    
-    // try {
-    //     const response = await axios.post(`${import.meta.env.VITE_API_URL}/bookings`, booking);
-    //     if (response.status === 201) {
-    //         console.log("Booking successfully created");
-    //         // Handle success notification
-    //         Swal.fire({
-    //             icon: 'success',
-    //             title: 'Booking Confirmed!',
-    //             text: 'Your booking has been successfully confirmed.',
-    //             showConfirmButton: false,
-    //             timer: 1500
-    //         });
-    //     } else {
-    //         // Handle error cases
-    //         console.error("Failed to create booking:", response.statusText);
-    //         // Show error notification
-    //         Swal.fire({
-    //             icon: 'error',
-    //             title: 'Booking Failed',
-    //             text: 'Failed to create booking. Please try again later.',
-    //             showConfirmButton: false,
-    //             timer: 1500
-    //         });
-    //     }
-    // } catch (error) {
-    //     console.error("Failed to create booking:", error);
-    //     // Show error notification
-    //     Swal.fire({
-    //         icon: 'error',
-    //         title: 'Booking Failed',
-    //         text: 'Failed to create booking. Please try again later.',
-    //         showConfirmButton: false,
-    //         timer: 1500
-    //     });
-    // }
+        try {
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/bookings`, booking)
+            console.log(data);
+
+            const { data: updateData } = await axios.patch(`${import.meta.env.VITE_API_URL}/room-details/${_id}`, { availability: 'Not-Available' });
+        console.log(updateData);
+            
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Booking Confirmed!',
+                text: 'Your booking has been successfully confirmed.',
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
 
 
     }
-    
 
 
 
- return (
+
+    return (
         <div>
 
 
@@ -136,14 +103,14 @@ const RoomDetails = () => {
                     <li>{specialOffers?.[1]}</li>
 
                     <div>
-                        
-                            <label htmlFor="">Booking Date : </label>
-                            {/* <input type="date" name="date" className="input input-bordered" /> */}
-                            <DatePicker
-                             selected={startDate}
-                             dateFormat="MMMM d, yyyy"
-                              onChange={(date)=> setStartDate(date)} />
-                        
+
+                        <label htmlFor="">Booking Date : </label>
+                        {/* <input type="date" name="date" className="input input-bordered" /> */}
+                        <DatePicker
+                            selected={startDate}
+                            dateFormat="MMMM d, yyyy"
+                            onChange={(date) => setStartDate(date)} />
+
                     </div>
 
 
@@ -180,7 +147,7 @@ const RoomDetails = () => {
                             <Button onClick={handleBookRoom}>Confirm</Button>
 
                             <Button color="gray" onClick={() => setOpenModal(false)}>
-                               Close
+                                Close
                             </Button>
                         </Modal.Footer>
 
