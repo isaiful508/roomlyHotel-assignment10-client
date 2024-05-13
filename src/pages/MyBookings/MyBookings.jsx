@@ -46,12 +46,14 @@ const MyBookings = () => {
         <div className="container lg:w-full md:w-full w-96  mx-auto mb-4">
 
             <div>
-                <h2 className="text-4xl text-center sora-500 mb-4 mt-4 underline">My Booking Lists</h2>
+                <h2 className="text-4xl bona-nova-regular text-center  mb-10 mt-4 ">My Booking Lists</h2>
             </div>
-            <div className="overflow-x-auto ">
+            <div className="overflow-x-auto font-600 border">
                 <table className="table-auto w-full">
-                    <thead className="sora-500">
-                        <tr>
+
+                    <thead>
+
+                        <tr >
                             <th className="px-4 py-2">No</th>
                             <th className="px-4 py-2">Name</th>
                             <th className="px-4 py-2">Room Description</th>
@@ -61,8 +63,10 @@ const MyBookings = () => {
                             <th className="px-4 py-2">Update</th>
                             <th className="px-4 py-2">Post Review</th>
                         </tr>
+ 
                     </thead>
-                    <tbody className="sora-400">
+
+                    <tbody className="">
                         {booking.map((item, index) =><BookingsLists
                          key={item._id}
                          item={(item)}

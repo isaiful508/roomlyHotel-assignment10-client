@@ -6,6 +6,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Button, Modal } from "flowbite-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 
 
@@ -65,6 +66,7 @@ const BookingsLists = ({ item, index }) => {
     //handle update the date
     const handleUpdateDate = (event, _id) => {
         event.preventDefault();
+        setOpenModal(false)
         // const date = event.target.value;
         const date = event.target.elements.date.value;
         console.log('input date', date)
@@ -77,7 +79,11 @@ const BookingsLists = ({ item, index }) => {
         axios.patch(`${import.meta.env.VITE_API_URL}/bookings/${_id}`, { date: date })
             .then(data => {
                 console.log(data.data)
-                
+                if (data.data.modifiedCount > 0) {
+                    toast.success("Updated Successfully")
+
+                }
+
             }).catch(error => {
                 console.error(error);
             })
@@ -89,7 +95,7 @@ const BookingsLists = ({ item, index }) => {
     return (
 
 
-        <tr className="hover:bg-[#ff4338] hover:text-white">
+        <tr className="hover:bg-red-500 font-500 hover:text-white">
             <td className="border px-4 py-2">{index + 1}</td>
             <td className="border px-4 py-2">{roomName}</td>
             <td className="border px-4 py-2">{
@@ -111,6 +117,9 @@ const BookingsLists = ({ item, index }) => {
 
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
 
+                <Modal.Header className="font-600 ">
+                   Update Your Booking Date
+                    </Modal.Header>
 
                 <Modal.Body >
 
@@ -119,10 +128,15 @@ const BookingsLists = ({ item, index }) => {
 
 
                         <form
-                            onSubmit={()=>handleUpdateDate(event, _id )} className="h-[400px]" >
+                            onSubmit={() => handleUpdateDate(event, _id)} className="h-" >
 
-                            <input name="date" type="date" className="border p-2 rounded-md" />
-                            <input className="btn" type="submit" value="Confirm" />
+                            <div className="flex gap-5">
+                                <input name="date" type="date" className="border border-[#ff4338] p-2 rounded-md" />
+
+
+                                <input className="px-6 py-2 font-medium tracking-wide border border-[#ff4338] text-[#ff4338]  hover:text-white capitalize transition-colors duration-300 transform    hover:bg-[#ff4338] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80  font-600 rounded-lg" type="submit" value="Update" />
+
+                            </div>
 
                         </form>
 
@@ -132,11 +146,7 @@ const BookingsLists = ({ item, index }) => {
 
                 </Modal.Body>
 
-                <Modal.Footer>
-                    <Button color="gray" onClick={() => setOpenModal(false)}>
-                        X
-                    </Button>
-                </Modal.Footer>
+
 
             </Modal>
         </tr>
