@@ -2,12 +2,9 @@ import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "../../provider/AuthProvider";
 import axios from "axios";
-import { FaDollarSign } from "react-icons/fa";
-import { TiDeleteOutline } from "react-icons/ti";
-import { FaRegEdit } from "react-icons/fa";
-import Swal from "sweetalert2";
-import { Button, Modal } from "flowbite-react";
+
 import "react-datepicker/dist/react-datepicker.css";
+import BookingsLists from "./BookingsLists";
 
 
 
@@ -17,9 +14,10 @@ const MyBookings = () => {
 
     const { user } = useContext(AuthContext);
     const [booking, setBooking] = useState([]);
-    const [openModal, setOpenModal] = useState(false);
+    
 
-    // console.log(booking[0]._id);
+    
+    
 
 
 
@@ -36,64 +34,7 @@ const MyBookings = () => {
         setBooking(data);
     }
 
-    // console.log(booking);
-    const handleCancel = (id) => {
-        Swal.fire({
-            title: "Are you sure want to cancel?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#FFB400",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Cancel it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios.delete(`${import.meta.env.VITE_API_URL}/bookings/${id}`)
-                    .then(response => {
-                        const { data } = response;
-                        console.log(data);
-                        if (data.deletedCount > 0) {
-                            axios.patch(`${import.meta.env.VITE_API_URL}/room-details/${id}`, { availability: 'Available' })
-                                .then(updateResponse => {
-                                    const { data: updateData } = updateResponse;
-                                    console.log(updateData);
-                                    // for refreshing UI
-                                    getData();
-                                    Swal.fire({
-                                        title: "Canceled!",
-                                        text: "Your booking has been canceled.",
-                                        icon: "success"
-                                    });
-                                })
-                                .catch(error => {
-                                    console.error('Error updating room details:', error);
-                                });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error deleting booking:', error);
-                    });
-            }
-        });
-    }
 
-
-
-
-    const handleUpdateDate = (event) => {
-        event.preventDefault();
-        const date = event.target.elements.date.value;
-        // console.log('input date', date)
-        const id = booking[0]._id;
-
-        axios.patch(`${import.meta.env.VITE_API_URL}/bookings/${id}`, { date: date })
-            .then(data => {
-                console.log(data.data)
-            }).catch(error => {
-                console.error(error);
-            })
-
-    }
 
 
 
@@ -122,42 +63,28 @@ const MyBookings = () => {
                         </tr>
                     </thead>
                     <tbody className="sora-400">
-                        {booking.map((item, index) => (
-                            <tr className="hover:bg-[#ff4338] hover:text-white" key={item._id}>
-                                <td className="border px-4 py-2">{index + 1}</td>
-                                <td className="border px-4 py-2">{item.roomName}</td>
-                                <td className="border px-4 py-2">{item.
-                                    roomDetails}</td>
-                                <td className="border px-4 py-2 flex items-center">{item.price} <FaDollarSign></FaDollarSign> </td>
-                                <td className="border px-4 py-2">{new Date(item.date).toLocaleDateString()}</td>
-
-                                <td className="border px-4 py-2 ">
-                                    <TiDeleteOutline onClick={() => handleCancel(item._id)} className="text-2xl "></TiDeleteOutline>
-
-                                </td>
-                                <td className="border px-4 py-2">
-
-                                    <FaRegEdit onClick={() => setOpenModal(true)}></FaRegEdit>
-
-                                </td>
-                                <td className="border px-4 py-2">
-                                    <button className="link">Post</button>
-                                </td>
-                            </tr>
-                        ))}
+                        {booking.map((item, index) =><BookingsLists
+                         key={item._id}
+                         item={(item)}
+                         index={index}
+                         ></BookingsLists> )}
                     </tbody>
                 </table>
-                {/* modal  */}
-                <Modal show={openModal} onClose={() => setOpenModal(false)}>
+                
+              
 
-                    {/* <Modal.Header>Update Booking Date</Modal.Header> */}
+
+                {/* <Modal show={openModal2} onClose={() => setOpenModal2(false)}>
+
+                    <Modal.Header>Post a Review</Modal.Header>
                     <Modal.Body >
 
 
                         <div>
 
+                           
                             <form
-                                onSubmit={handleUpdateDate} className="h-[400px]" >
+                                onSubmit={handlePostReview} className="h-[400px]" >
 
                                 <input name="date" type="date" className="border p-2 rounded-md" />
                                 <input className="btn" type="submit" value="Confirm" />
@@ -171,12 +98,13 @@ const MyBookings = () => {
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <Button color="gray" onClick={() => setOpenModal(false)}>
+                        <Button color="gray" onClick={() => setOpenModal2(false)}>
                             X
                         </Button>
                     </Modal.Footer>
 
-                </Modal>
+                </Modal> */}
+
             </div>
         </div>
     );
