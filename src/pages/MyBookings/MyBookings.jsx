@@ -7,24 +7,29 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { FaRegEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { Button, Modal } from "flowbite-react";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 
 const MyBookings = () => {
 
-    
+
 
     const { user } = useContext(AuthContext);
     const [booking, setBooking] = useState([]);
     const [openModal, setOpenModal] = useState(false);
-    
+
+    // console.log(booking[0]._id);
+
+
+
 
 
     useEffect(() => {
-        
-        
+
+
         getData();
-        
+
     }, [user])
     const getData = async () => {
         const { data } = await axios(`${import.meta.env.VITE_API_URL}/bookings/${user?.email}`)
@@ -32,7 +37,7 @@ const MyBookings = () => {
     }
 
     // console.log(booking);
-    const handleCancel = (id) =>{
+    const handleCancel = (id) => {
         Swal.fire({
             title: "Are you sure want to cancel?",
             text: "You won't be able to revert this!",
@@ -75,6 +80,27 @@ const MyBookings = () => {
 
 
 
+    const handleUpdateDate = (event) => {
+        event.preventDefault();
+        const date = event.target.elements.date.value;
+        // console.log('input date', date)
+        const id = booking[0]._id;
+
+        axios.patch(`${import.meta.env.VITE_API_URL}/bookings/${id}`, { date: date })
+            .then(data => {
+                console.log(data.data)
+            }).catch(error => {
+                console.error(error);
+            })
+
+    }
+
+
+
+
+
+
+
     return (
         <div className="container lg:w-full md:w-full w-96  mx-auto mb-4">
 
@@ -106,44 +132,51 @@ const MyBookings = () => {
                                 <td className="border px-4 py-2">{new Date(item.date).toLocaleDateString()}</td>
 
                                 <td className="border px-4 py-2 ">
-                                  <TiDeleteOutline onClick={()=> handleCancel(item._id)} className="text-2xl "></TiDeleteOutline>
-                                    
-                                    </td>
-                                <td className="border px-4 py-2">
-                                   <FaRegEdit></FaRegEdit>
+                                    <TiDeleteOutline onClick={() => handleCancel(item._id)} className="text-2xl "></TiDeleteOutline>
+
                                 </td>
                                 <td className="border px-4 py-2">
-                                <button className="link">Post</button>
+
+                                    <FaRegEdit onClick={() => setOpenModal(true)}></FaRegEdit>
+
+                                </td>
+                                <td className="border px-4 py-2">
+                                    <button className="link">Post</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                {/* modal  */}
                 <Modal show={openModal} onClose={() => setOpenModal(false)}>
 
-                        <Modal.Header>Booking Summary : </Modal.Header>
-                        <Modal.Body>
-                            <div className="space-y-6">
-                                <h2 className="text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
-                                    Date
-                                </h2>
-                                <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                   
-                                </p>
-                                <p>Booked For : </p>
+                    {/* <Modal.Header>Update Booking Date</Modal.Header> */}
+                    <Modal.Body >
 
-                            </div>
-                        </Modal.Body>
 
-                        <Modal.Footer>
-                            <Button>Confirm</Button>
+                        <div>
 
-                            <Button color="gray" onClick={() => setOpenModal(false)}>
-                                Close
-                            </Button>
-                        </Modal.Footer>
+                            <form
+                                onSubmit={handleUpdateDate} className="h-[400px]" >
 
-                    </Modal>
+                                <input name="date" type="date" className="border p-2 rounded-md" />
+                                <input className="btn" type="submit" value="Confirm" />
+
+                            </form>
+
+
+
+                        </div>
+
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button color="gray" onClick={() => setOpenModal(false)}>
+                            X
+                        </Button>
+                    </Modal.Footer>
+
+                </Modal>
             </div>
         </div>
     );

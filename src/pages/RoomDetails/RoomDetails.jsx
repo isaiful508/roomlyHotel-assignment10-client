@@ -117,7 +117,7 @@ const RoomDetails = () => {
                     <div>
 
                         <label htmlFor="">Booking Date : </label>
-                        {/* <input type="date" name="date" className="input input-bordered" /> */}
+                       
                         <DatePicker
                             selected={startDate}
                             dateFormat="MMMM d, yyyy"
