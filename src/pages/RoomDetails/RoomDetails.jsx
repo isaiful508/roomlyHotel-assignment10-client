@@ -23,7 +23,7 @@ const RoomDetails = () => {
     const [openModal, setOpenModal] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
 
-    
+
 
 
 
@@ -64,14 +64,14 @@ const RoomDetails = () => {
         try {
 
 
-            const { data: updateData } = await axios.patch(`${import.meta.env.VITE_API_URL}/room-details/${_id}`, { availability: 'Not-Available' });
+            const { data: updateData } = await axios.patch(`http://localhost:5000/room-details/${_id}`, { availability: 'Not-Available' });
             console.log(updateData);
 
             if (availability === 'Not-Available') {
                 toast.error("This Room already has been booked")
 
             } else {
-                const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/bookings`, booking)
+                const { data } = await axios.post(`http://localhost:5000/bookings`, booking)
                 console.log(data);
                 Swal.fire({
                     icon: 'success',
@@ -115,9 +115,15 @@ const RoomDetails = () => {
                     <p className="text-[#3665b8]"> Price Per Night : <span className="text-[#eb865e]">{pricePerNight} $</span></p>
                     <p className="text-[#3665b8]">Availability :  <span className={`${availabilityColor}`}>{availability}</span></p>
                     <p className="text-[#3665b8]">Room Size : <span className="text-[#eb865e]"> {roomSize} </span></p>
-                    <h2 className="text-2xl">Special Offers: </h2>
 
-                    <p>{specialOffers}</p>
+                   {specialOffers && 
+                   
+                   <div>
+                        <h2 className="text-2xl text-[#3665b8]">Special Offers: </h2>
+
+                        <p className="text-[#eb865e]">{specialOffers}</p>
+                    </div>
+                    }
 
 
 
@@ -126,7 +132,7 @@ const RoomDetails = () => {
                         <label htmlFor="">Pick Your Booking date : </label>
 
                         <DatePicker
-                        className="border p-2 rounded-md text-[#eb865e]"
+                            className="border p-2 rounded-md text-[#eb865e]"
                             selected={startDate}
                             dateFormat="MMMM d, yyyy"
                             onChange={(date) => setStartDate(date)} />

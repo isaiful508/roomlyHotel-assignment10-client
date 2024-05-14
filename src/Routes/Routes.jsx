@@ -25,7 +25,7 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Home></Home>,
-                loader: () => fetch(`${import.meta.env.VITE_API_URL}/rooms/`)
+                loader: () => fetch(`http://localhost:5000/rooms/`)
             },
             {
                 path: '/rooms',
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
                 element: <PrivateRoutes>
                     <RoomDetails></RoomDetails>
                 </PrivateRoutes>,
-                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/room-details/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/room-details/${params.id}`, {credentials: 'include'})
             }
 
         ]

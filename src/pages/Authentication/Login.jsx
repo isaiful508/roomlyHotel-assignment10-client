@@ -71,16 +71,30 @@ const Login = () => {
 
     // Google Signin
     const handleGoogleLogin = () => {
+
         loginWithGoogle()
             .then((result) => {
-                setUser(result.user)
-                // console.log(result.user)                
-                toast.success("Login Successfully")
+                const googleUser = result.user
+                setUser(googleUser);
+                const user = { email: googleUser.email }
 
-                navigate(location?.state ? location.state : '/');
+                // Send user data to the server to get a JWT token
+                axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                    .then((res) => {
+                        console.log(res.data);
+                        if (res.data.success) {
+                            toast.success("Login Successfully")
+
+                            navigate(location?.state ? location.state : '/');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error generating JWT:', error);
+                        toast.error('Failed to log in with Google');
+                    });
+
             })
             .catch(error => console.error(error))
-
     }
 
 

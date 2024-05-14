@@ -11,7 +11,7 @@ const Rooms = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const { data } = await axios(`${import.meta.env.VITE_API_URL}/rooms`)
+            const { data } = await axios(`http://localhost:5000/rooms`)
             setRooms(data);
             
 

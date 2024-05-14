@@ -38,12 +38,12 @@ const BookingsLists = ({ item, index }) => {
             confirmButtonText: "Yes, Cancel it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`${import.meta.env.VITE_API_URL}/bookings/${id}`)
+                axios.delete(`http://localhost:5000/bookings/${id}`)
                     .then(response => {
                         const { data } = response;
                         console.log(data);
                         if (data.deletedCount > 0) {
-                            axios.patch(`${import.meta.env.VITE_API_URL}/room-details/${id}`, { availability: 'Available' })
+                            axios.patch(`http://localhost:5000/room-details/${id}`, { availability: 'Available' })
                                 .then(updateResponse => {
                                     const { data: updateData } = updateResponse;
                                     console.log(updateData);
@@ -80,7 +80,7 @@ const BookingsLists = ({ item, index }) => {
         console.log(_id);
 
 
-        axios.patch(`${import.meta.env.VITE_API_URL}/bookings/${_id}`, { date: date })
+        axios.patch(`http://localhost:5000/bookings/${_id}`, { date: date })
             .then(data => {
                 console.log(data.data)
                 if (data.data.modifiedCount > 0) {

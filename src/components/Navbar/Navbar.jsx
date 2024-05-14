@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
+import logo from '../../assets/roomly_logo.png'
 
 
 const Navbar = () => {
@@ -44,8 +45,8 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className="flex items-center">
-                        <img className="w-10" src="" alt="" />
-                        <Link to='/' className="btn btn-ghost   font-700 lg:text-3xl text-xl font-700">Roomly</Link>
+                        <img className="w-10" src={logo} alt="" />
+                        <Link to='/' className="btn btn-ghost   font-700 lg:text-3xl text-xl bona-nova-regular">Roomly</Link>
                     </div>
                 </div>
                 <div className="navbar-center hidden lg:flex">

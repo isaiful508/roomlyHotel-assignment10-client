@@ -10,13 +10,13 @@ const Maps = () => {
         <div className="my-10 mt-20 flex justify-between items-center gap-6 container mx-auto">
             <div className="text-[#3665b8]">
                 <h2 className="text-5xl jost-600">HOW TO FIND OUR HOTEL</h2>
-                <p className="font-400 mt-4">Let us be your hosts as you create cherished memories and discover <br /> the true essence of Zurich. Book your stay with us today and open the door to a world of comfort, charm, and heartfelt hospitality.</p>
+                <p className="font-400 mt-4">Let us be your hosts as you create cherished memories and discover <br /> the true essence of Cox Bazar. Book your stay with us today and open the door to a world of comfort, charm, and heartfelt hospitality.</p>
 
                 <div className="flex mt-6 gap-4 text-[#eb865e]">
                     <div>
                         <MdOutlineFlightLand className="text-3xl mb-2"></MdOutlineFlightLand>
-                        <h5 className="font-500">31 KILOMETRES FROM AIRPORT</h5>
-                        <p className="font-400">The drive from The Airport to Hoteller Suites takes approximately 35 minutes.</p>
+                        <h5 className="font-500">15 KILOMETRES FROM AIRPORT</h5>
+                        <p className="font-400">The drive from The Airport to Hoteller Suites takes approximately 20 minutes.</p>
                     </div>
                     <div>
                         <RiHotelLine className="text-3xl mb-2"></RiHotelLine>

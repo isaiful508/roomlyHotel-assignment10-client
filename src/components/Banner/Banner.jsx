@@ -13,7 +13,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 
 const Banner = () => {
   return (
-    <div className=' container text-slate-100 mx-auto'>
+    <div className=' container text-slate-100 mx-auto mt-12'>
       <Swiper
         effect={'cards'}
         // grabCursor={true}
