@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
 
 const Login = () => {
@@ -18,7 +19,7 @@ const Login = () => {
 
     const location = useLocation();
     const navigate = useNavigate()
-    
+
 
 
     const handleSignin = e => {
@@ -28,17 +29,28 @@ const Login = () => {
 
         const email = form.get('email');
         const password = form.get('password');
-        // console.log(email, password);
+
 
         setLoginError("")
 
         signIn(email, password)
-            .then(() => {
-                // console.log(result.user)
+            .then((result) => {
+                const loggedInUser = result.user;
+                console.log(loggedInUser);
+                const user = { email }
 
                 toast.success("Login Successfully")
 
-                navigate(location?.state ? location.state : '/');
+
+                //get access tokn
+                axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data.success) {
+                            navigate(location?.state ? location.state : '/');
+                        }
+                    })
+
 
                 //navigate after login
             })
@@ -93,9 +105,9 @@ const Login = () => {
                             </svg>
                         </span>
 
-                        <input type="email" 
-                        name="email"
-                        className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address" />
+                        <input type="email"
+                            name="email"
+                            className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address" />
                     </div>
 
                     <div className="relative flex items-center mt-4">
@@ -105,36 +117,36 @@ const Login = () => {
                             </svg>
                         </span>
 
-                        <input 
-                       type={showPassword ? "text" : "password"}
-                       name="password"
-                        
-                        className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password" />
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+
+                            className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password" />
 
                         <span className="absolute top-4 right-4" onClick={() => setShowPassword(!showPassword)}>
-                        {
-                            showPassword ? <FaEyeSlash className="text-xl"></FaEyeSlash> : <FaEye className="text-xl"></FaEye>
-                        }
-                    </span>
+                            {
+                                showPassword ? <FaEyeSlash className="text-xl"></FaEyeSlash> : <FaEye className="text-xl"></FaEye>
+                            }
+                        </span>
 
 
 
                     </div>
 
                     {
-                    loginError && <p className="text-red-700 font-500">{loginError}</p>
-                }
+                        loginError && <p className="text-red-700 font-500">{loginError}</p>
+                    }
 
                     <div className="mt-6">
 
-                        <button 
-                        className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#3665b8]  hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 font-500 focus:ring-opacity-50">Sign in</button>
+                        <button
+                            className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#3665b8]  hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 font-500 focus:ring-opacity-50">Sign in</button>
 
                         <p className="mt-4 text-center text-gray-600 dark:text-gray-400 font-500">or sign in with</p>
 
-                        <button 
-                        onClick={handleGoogleLogin} 
-                        className="flex items-center justify-center w-full px-6 py-3 mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <button
+                            onClick={handleGoogleLogin}
+                            className="flex items-center justify-center w-full px-6 py-3 mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <svg className="w-6 h-6 mx-2" viewBox="0 0  40 40">
                                 <path d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z" fill="#FFC107" />
                                 <path d="M5.25497 12.2425L10.7308 16.2583C12.2125 12.59 15.8008 9.99999 20 9.99999C22.5491 9.99999 24.8683 10.9617 26.6341 12.5325L31.3483 7.81833C28.3716 5.04416 24.39 3.33333 20 3.33333C13.5983 3.33333 8.04663 6.94749 5.25497 12.2425Z" fill="#FF3D00" />

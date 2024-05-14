@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-import {  useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 
 
@@ -18,8 +18,8 @@ const RoomDetails = () => {
 
     const room = useLoaderData();
     const { user } = useContext(AuthContext);
-    
-    
+
+
     const [openModal, setOpenModal] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
 
@@ -34,7 +34,8 @@ const RoomDetails = () => {
         image,
         roomSize,
         specialOffers,
-        _id
+        _id,
+        reviews
 
     } = room || {};
 
@@ -62,22 +63,22 @@ const RoomDetails = () => {
             const { data: updateData } = await axios.patch(`${import.meta.env.VITE_API_URL}/room-details/${_id}`, { availability: 'Not-Available' });
             console.log(updateData);
 
-           if(availability === 'Not-Available'){
-            toast.error("This Room already has been booked")
-            
-           }else{
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/bookings`, booking)
-            console.log(data);
-            Swal.fire({
-                icon: 'success',
-                title: 'Booking Confirmed!',
-                text: 'Your booking has been successfully confirmed.',
-                showConfirmButton: false,
-                timer: 1500
-            });
-           }
+            if (availability === 'Not-Available') {
+                toast.error("This Room already has been booked")
 
-            
+            } else {
+                const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/bookings`, booking)
+                console.log(data);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Booking Confirmed!',
+                    text: 'Your booking has been successfully confirmed.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+
+
 
         } catch (err) {
             console.log(err);
@@ -111,13 +112,14 @@ const RoomDetails = () => {
                     <p>{roomSize}</p>
                     <h2 className="text-2xl">Special Offers: </h2>
 
-                    <li>{specialOffers?.[0]}</li>
-                    <li>{specialOffers?.[1]}</li>
+                    <p>{specialOffers}</p>
+
+
 
                     <div>
 
                         <label htmlFor="">Booking Date : </label>
-                       
+
                         <DatePicker
                             selected={startDate}
                             dateFormat="MMMM d, yyyy"
@@ -136,9 +138,20 @@ const RoomDetails = () => {
                             className=" w-full px-6 py-2 tracking-wide text-[#ff4338] rounded-md  font-normal font-400  border border-[#ff4338]  hover:text-white capitalize transition-colors duration-300 transform bg-[]  hover:bg-[#ff4338] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">Book Now</button>
                     </div>
 
+                    {/* reviews sewction */}
+
+                   {/* {
+                    reviews.map((review, idx) => <div key={idx}>
+                        <p>{review.username}</p>
+                        <p>{review.comment}</p>
+                        <p>{review.timestamp}</p>
+                        
+                    </div>)
+                   } */}
 
 
 
+                    {/* booking summary modal */}
                     <Modal show={openModal} onClose={() => setOpenModal(false)}>
 
                         <Modal.Header>Booking Summary : </Modal.Header>

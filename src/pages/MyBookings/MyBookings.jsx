@@ -10,18 +10,8 @@ import BookingsLists from "./BookingsLists";
 
 const MyBookings = () => {
 
-
-
     const { user } = useContext(AuthContext);
     const [booking, setBooking] = useState([]);
-    
-
-    
-    
-
-
-
-
 
     useEffect(() => {
 
@@ -30,15 +20,9 @@ const MyBookings = () => {
 
     }, [user])
     const getData = async () => {
-        const { data } = await axios(`${import.meta.env.VITE_API_URL}/bookings/${user?.email}`)
+        const { data } = await axios(`http://localhost:5000/bookings/${user?.email}`, {withCredentials: true})
         setBooking(data);
     }
-
-
-
-
-
-
 
 
 
@@ -63,51 +47,20 @@ const MyBookings = () => {
                             <th className="px-4 py-2">Update</th>
                             <th className="px-4 py-2">Post Review</th>
                         </tr>
- 
+
                     </thead>
 
                     <tbody className="">
-                        {booking.map((item, index) =><BookingsLists
-                         key={item._id}
-                         item={(item)}
-                         index={index}
-                         ></BookingsLists> )}
+                        {booking.map((item, index) => <BookingsLists
+                            key={item._id}
+                            item={(item)}
+                            index={index}
+                        ></BookingsLists>)}
                     </tbody>
                 </table>
-                
-              
-
-
-                {/* <Modal show={openModal2} onClose={() => setOpenModal2(false)}>
-
-                    <Modal.Header>Post a Review</Modal.Header>
-                    <Modal.Body >
-
-
-                        <div>
-
-                           
-                            <form
-                                onSubmit={handlePostReview} className="h-[400px]" >
-
-                                <input name="date" type="date" className="border p-2 rounded-md" />
-                                <input className="btn" type="submit" value="Confirm" />
-
-                            </form>
 
 
 
-                        </div>
-
-                    </Modal.Body>
-
-                    <Modal.Footer>
-                        <Button color="gray" onClick={() => setOpenModal2(false)}>
-                            X
-                        </Button>
-                    </Modal.Footer>
-
-                </Modal> */}
 
             </div>
         </div>

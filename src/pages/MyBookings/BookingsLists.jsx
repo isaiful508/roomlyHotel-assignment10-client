@@ -4,18 +4,22 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { FaRegEdit } from "react-icons/fa";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Button, Modal } from "flowbite-react";
-import { useState } from "react";
+import { Modal } from "flowbite-react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../provider/AuthProvider";
+
 
 
 
 
 const BookingsLists = ({ item, index }) => {
+    const { user } = useContext(AuthContext);
 
     // console.log(item);
     const { roomName, roomDetails, price, _id, date, } = item;
     const [openModal, setOpenModal] = useState(false);
+    const [openModal2, setOpenModal2] = useState(false);
 
 
 
@@ -91,6 +95,41 @@ const BookingsLists = ({ item, index }) => {
     }
 
 
+    const handlePostReview = (event, _id) => {
+        event.preventDefault();
+        setOpenModal2(false);
+        const form = event.target;
+        const username = form.name.value;
+        const rating = form.rating.value;
+        const comment = form.comment.value;
+        const timestamp = form.date.value;
+
+        const reviewData = {
+           username,
+            rating,
+            comment,
+            timestamp
+        };
+    
+        console.log(_id, reviewData);
+    
+        // Send the review data to the server
+        axios.patch(`http://localhost:5000/room-details/${_id}`, reviewData)
+            .then((data) => {
+                // Handle success response
+                console.log(data.data);
+            })
+            .catch(error => {
+                // Handle error
+                console.error('Error sending review data:', error);
+            });
+        
+
+
+
+
+    }
+
 
     return (
 
@@ -111,15 +150,15 @@ const BookingsLists = ({ item, index }) => {
                 <FaRegEdit onClick={() => setOpenModal(true)}></FaRegEdit>
             </td>
             <td className="border px-4 py-2">
-                <button className="link">Post</button>
+                <button onClick={() => setOpenModal2(true)} className="link">Post</button>
             </td>
 
-
+            {/* date update modal */}
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
 
                 <Modal.Header className="font-600 ">
-                   Update Your Booking Date
-                    </Modal.Header>
+                    Update Your Booking Date
+                </Modal.Header>
 
                 <Modal.Body >
 
@@ -149,6 +188,79 @@ const BookingsLists = ({ item, index }) => {
 
 
             </Modal>
+
+            {/* post review modal */}
+            <Modal show={openModal2} onClose={() => setOpenModal2(false)}>
+
+                <Modal.Header>Post a Review</Modal.Header>
+                <Modal.Body >
+
+
+                    <div>
+
+
+                        <form
+                            onSubmit={() =>handlePostReview(event, _id)} className="h-[400px]" >
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">User Name</span>
+                                </label>
+                                <input
+                                name="name"
+                                type="text" defaultValue={user?.displayName} className="input input-bordered" />
+                            </div>
+
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Comment</span>
+                                </label>
+                                <input name="comment" type="text" placeholder="comment" className="input input-bordered" />
+                            </div>
+
+                            <div className="form-control">
+                                <label className="text-sm">Ratings</label>
+
+                                <select className="w-full input input-bordered" name="rating">
+
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                   
+                                </select>
+                            </div>
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Time Stamp</span>
+                                </label>
+                                <input name="date" type="date" className="border p-2 rounded-md" />
+                            </div>
+
+                            <div className="form-control mt-6">
+                                <input className="btn" type="submit" value="Post a review" />
+                            </div>
+
+
+                        </form>
+
+
+
+                    </div>
+
+                </Modal.Body>
+
+                {/* <Modal.Footer>
+                    <Button color="gray" onClick={() => setOpenModal2(false)}>
+                        X
+                    </Button>
+                </Modal.Footer> */}
+
+            </Modal>
+
         </tr>
 
 
