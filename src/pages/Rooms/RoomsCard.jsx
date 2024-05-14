@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 const RoomsCard = ({ room }) => {
   const { name, image, _id, pricePerNight, availability, reviews } = room;
+  
   const availabilityColor = availability === 'Available' ? 'text-green-700' : 'text-red-700';
   return (
     <Link to={`/room-details/${_id}`}

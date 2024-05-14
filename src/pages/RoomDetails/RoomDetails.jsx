@@ -23,6 +23,8 @@ const RoomDetails = () => {
     const [openModal, setOpenModal] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
 
+    
+
 
 
 
@@ -38,6 +40,8 @@ const RoomDetails = () => {
         reviews
 
     } = room || {};
+
+    const availabilityColor = availability === 'Available' ? 'text-green-700' : 'text-red-700';
 
 
     const handleBookRoom = async (e) => {
@@ -91,25 +95,26 @@ const RoomDetails = () => {
 
 
     return (
-        <div>
 
+        <div className="mb-6">
 
 
             <div>
-                <h2 className="text-3xl text-center mt-4 mb-6">Room Details Page </h2>
+                <h2 className="text-3xl text-center jost-600 text-[#3665b8] mt-4 mb-6">Here You Can Book Your Favourite Room</h2>
             </div>
+
             <div className="card container mx-auto lg:card-side bg-base-100 shadow-lg">
 
                 <figure className="max-w-3xl">
                     <img src={image} alt="Album" />
                 </figure>
 
-                <div className="card-body">
-                    <h2 className="card-title text-3xl">{name}</h2>
-                    <p>{description}</p>
-                    <p> Price Per Night : {pricePerNight} $</p>
-                    <p>Availability :  {availability}</p>
-                    <p>{roomSize}</p>
+                <div className="card-body font-500">
+                    <h2 className="card-title text-[#3665b8]  text-3xl bona-nova-regular">{name}</h2>
+                    <p className="text-[#3665b8]">Details :  <span className="text-[#eb865e]">{description}</span> </p>
+                    <p className="text-[#3665b8]"> Price Per Night : <span className="text-[#eb865e]">{pricePerNight} $</span></p>
+                    <p className="text-[#3665b8]">Availability :  <span className={`${availabilityColor}`}>{availability}</span></p>
+                    <p className="text-[#3665b8]">Room Size : <span className="text-[#eb865e]"> {roomSize} </span></p>
                     <h2 className="text-2xl">Special Offers: </h2>
 
                     <p>{specialOffers}</p>
@@ -118,9 +123,10 @@ const RoomDetails = () => {
 
                     <div>
 
-                        <label htmlFor="">Booking Date : </label>
+                        <label htmlFor="">Pick Your Booking date : </label>
 
                         <DatePicker
+                        className="border p-2 rounded-md text-[#eb865e]"
                             selected={startDate}
                             dateFormat="MMMM d, yyyy"
                             onChange={(date) => setStartDate(date)} />
@@ -140,7 +146,7 @@ const RoomDetails = () => {
 
                     {/* reviews sewction */}
 
-                   {/* {
+                    {/* {
                     reviews.map((review, idx) => <div key={idx}>
                         <p>{review.username}</p>
                         <p>{review.comment}</p>
@@ -154,16 +160,16 @@ const RoomDetails = () => {
                     {/* booking summary modal */}
                     <Modal show={openModal} onClose={() => setOpenModal(false)}>
 
-                        <Modal.Header>Booking Summary : </Modal.Header>
+                        <Modal.Header className="underline jost-600">Booking Summary : </Modal.Header>
                         <Modal.Body>
                             <div className="space-y-6">
-                                <h2 className="text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
+                                <h2 className="text-2xl leading-relaxed text-[#3665b8] dark:text-gray-400 jost-600">
                                     {description}
                                 </h2>
-                                <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                <p className="text-base leading-relaxed text-[#3665b8]  dark:text-gray-400 font-500">
                                     {pricePerNight} $ Per Night
                                 </p>
-                                <p>Booked For : {startDate.toDateString()}</p>
+                                <p className="font-500 text-[#3665b8] ">Booked For : {startDate.toDateString()}</p>
 
                             </div>
                         </Modal.Body>
