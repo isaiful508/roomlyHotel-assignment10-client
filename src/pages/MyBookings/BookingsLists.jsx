@@ -56,20 +56,7 @@ const BookingsLists = ({ item, index , booking, setBooking  }) => {
                                         });
                                     }
                                 })
-                        // if (data.deletedCount > 0) {
-                        //     axios.patch(`http://localhost:5000/room-details/${id}`, { availability: 'Available' })
-                        //         .then(updateResponse => {
-                        //             const { data: updateData } = updateResponse;
-                        //             console.log(updateData);
-                        //             // for refreshing UI
-                        //             // getData();
-                        //             Swal.fire({
-                        //                 title: "Canceled!",
-                        //                 text: "Your booking has been canceled.",
-                        //                 icon: "success"
-                        //             });
-                        //         })
-
+                        
                                 .catch(error => {
                                     console.error('Error updating room details:', error);
                                 });
@@ -83,19 +70,20 @@ const BookingsLists = ({ item, index , booking, setBooking  }) => {
     }
 
 
+    //handle date updated
     const handleUpdateDate = (event, _id) => {
         event.preventDefault();
         setOpenModal(false);
         
-        // Extract date value from event target
+        
         const dateValue = event.target.elements.date.value;
         
-        // Convert date string to a Date object
+        
         const date = new Date(dateValue);
         
-        // Check if the date is valid
+       
         if (isNaN(date.getTime())) {
-            // Handle invalid date
+           
             console.error("Invalid date:", dateValue);
             return;
         }
@@ -119,37 +107,6 @@ const BookingsLists = ({ item, index , booking, setBooking  }) => {
     }
 
 
-
-
-
-
-    //handle update the date
-    // const handleUpdateDate = (event, _id) => {
-    //     event.preventDefault();
-    //     setOpenModal(false)
-    //     // const date = event.target.value;
-    //     const date = event.target.elements.date.value;
-    //     console.log('input date', date)
-    //     // const id = booking[0]._id;
-        
-
-
-    //     console.log(_id);
-
-
-    //     axios.patch(`http://localhost:5000/bookings/${_id}`, { date: date })
-    //         .then(data => {
-    //             console.log(data.data)
-    //             if (data.data.modifiedCount > 0) {
-    //                 toast.success("Updated Successfully")
-
-    //             }
-
-    //         }).catch(error => {
-    //             console.error(error);
-    //         })
-
-    // }
 
 
     const handlePostReview = (event, _id) => {

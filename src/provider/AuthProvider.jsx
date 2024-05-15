@@ -38,6 +38,30 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider)
   }
 
+
+  // const logOut = async () => {
+  //   setLoading(true);
+  //   try {
+  //     // Clear the JWT cookie on the server
+  //     await axios.post('http://localhost:5000/logout', {}, { withCredentials: true });
+  //     // Sign out the user from Firebase and return the promise
+  //     return await signOut(auth);
+
+  //     setUser(null);
+  //   } catch (error) {
+  //     console.error('Error during logout:', error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
+
+
+
+
+
+
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
@@ -54,16 +78,24 @@ const AuthProvider = ({ children }) => {
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
+
+      const userEmail = currentUser?.email || user?.email
+      const loggedUser = {email : userEmail}
       setUser(currentUser)
       console.log('CurrentUser-->', currentUser)
       setLoading(false)
-      // if(currentUser){
-      //   const loggedUser = {email : currentUser.email}
-      //   axios.post('http://localhost:5000/jwt',loggedUser, { withCredentials: true })
-      //   .then(res =>{
-      //     console.log('token res', res.dat)
-      //   })
-      // }
+      if(currentUser){
+        
+        axios.post('http://localhost:5000/jwt',loggedUser, { withCredentials: true })
+        .then(res =>{
+          console.log('token res', res.data)
+        })
+      }else{
+        axios.post('http://localhost:5000/logout', loggedUser, {withCredentials : true})
+        .then((res) =>{
+          console.log(res.data)
+        })
+      }
 
 
     })

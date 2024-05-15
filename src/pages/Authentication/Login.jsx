@@ -37,19 +37,19 @@ const Login = () => {
             .then((result) => {
                 const loggedInUser = result.user;
                 console.log(loggedInUser);
-                const user = { email }
+                // const user = { email }
 
                 toast.success("Login Successfully")
 
 
                 //get access tokn
-                axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
-                    .then(res => {
-                        console.log(res.data)
-                        if (res.data.success) {
-                            navigate(location?.state ? location.state : '/');
-                        }
-                    })
+                // axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                //     .then(res => {
+                //         console.log(res.data)
+                //         if (res.data.success) {
+                //             navigate(location?.state ? location.state : '/');
+                //         }
+                //     })
 
 
                 //navigate after login
@@ -76,22 +76,23 @@ const Login = () => {
             .then((result) => {
                 const googleUser = result.user
                 setUser(googleUser);
-                const user = { email: googleUser.email }
+                toast.success("Login Successfully")
+
+                navigate(location?.state ? location.state : '/');
+                // const user = { email: googleUser.email }
 
                 // Send user data to the server to get a JWT token
-                axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
-                    .then((res) => {
-                        console.log(res.data);
-                        if (res.data.success) {
-                            toast.success("Login Successfully")
-
-                            navigate(location?.state ? location.state : '/');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error generating JWT:', error);
-                        toast.error('Failed to log in with Google');
-                    });
+                // axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                //     .then((res) => {
+                //         console.log(res.data);
+                //         if (res.data.success) {
+                           
+                //         }
+                //     })
+                //     .catch(error => {
+                //         console.error('Error generating JWT:', error);
+                //         toast.error('Failed to log in with Google');
+                //     });
 
             })
             .catch(error => console.error(error))

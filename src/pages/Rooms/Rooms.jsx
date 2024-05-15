@@ -32,17 +32,11 @@ const Rooms = () => {
 
     
 
-
-
-
-
-
-
     return (
         <div className="container mx-auto">
 
             <div>
-                <div className="flex justify-end mt-6 ">
+                <div className="flex justify-end mt-6 font-500">
                     
                 <select className="border-2 p-2 rounded-lg" onChange={handleFilterChange}>
                     <option  value="">Filter By Price</option>
