@@ -22,6 +22,7 @@ const RoomDetails = () => {
 
     const [openModal, setOpenModal] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
+    const [availability, setAvailability] = useState(room.availability);
 
 
 
@@ -32,12 +33,12 @@ const RoomDetails = () => {
         name,
         description,
         pricePerNight,
-        availability,
+        // availability,
         image,
         roomSize,
         specialOffers,
         _id,
-        reviews
+        // reviews
 
     } = room || {};
 
@@ -46,7 +47,7 @@ const RoomDetails = () => {
 
     const handleBookRoom = async (e) => {
         e.preventDefault();
-        setOpenModal(false)
+        setOpenModal(false);
         const bookingDate = startDate;
 
         const booking = {
@@ -58,20 +59,15 @@ const RoomDetails = () => {
             price: pricePerNight,
             date: bookingDate,
             photo: image,
-
-        }
+        };
 
         try {
-
-
             const { data: updateData } = await axios.patch(`http://localhost:5000/room-details/${_id}`, { availability: 'Not-Available' });
             console.log(updateData);
 
-            if (availability === 'Not-Available') {
-                toast.error("This Room already has been booked")
-
-            } else {
-                const { data } = await axios.post(`http://localhost:5000/bookings`, booking)
+            if (updateData.modifiedCount === 1) { // Ensure the update was successful
+                setAvailability('Not-Available');
+                const { data } = await axios.post(`http://localhost:5000/bookings`, booking);
                 console.log(data);
                 Swal.fire({
                     icon: 'success',
@@ -80,16 +76,69 @@ const RoomDetails = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+            } else {
+                toast.error("This room is already booked.");
             }
-
-
-
         } catch (err) {
             console.log(err);
         }
+    };
 
 
-    }
+
+
+
+
+
+
+
+
+    // const handleBookRoom = async (e) => {
+    //     e.preventDefault();
+    //     setOpenModal(false)
+    //     const bookingDate = startDate;
+
+    //     const booking = {
+    //         _id,
+    //         customerName: user?.displayName,
+    //         customerEmail: user?.email,
+    //         roomName: name,
+    //         roomDetails: description,
+    //         price: pricePerNight,
+    //         date: bookingDate,
+    //         photo: image,
+
+    //     }
+
+    //     try {
+
+
+    //         const { data: updateData } = await axios.patch(`http://localhost:5000/room-details/${_id}`, { availability: 'Not-Available' });
+    //         console.log(updateData);
+
+    //         if (availability === 'Not-Available') {
+    //             toast.error("This Room already has been booked")
+
+    //         } else {
+    //             const { data } = await axios.post(`http://localhost:5000/bookings`, booking)
+    //             console.log(data);
+    //             Swal.fire({
+    //                 icon: 'success',
+    //                 title: 'Booking Confirmed!',
+    //                 text: 'Your booking has been successfully confirmed.',
+    //                 showConfirmButton: false,
+    //                 timer: 1500
+    //             });
+    //         }
+
+
+
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+
+
+    // }
 
 
 

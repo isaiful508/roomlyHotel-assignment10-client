@@ -26,31 +26,11 @@ const Rooms = () => {
 
 
 
-    // useEffect(() => {
-    //     const getData = async () => {
-    //         const { data } = await axios(`http://localhost:5000/rooms`)
-    //         setRooms(data);
-            
-
-    //     }
-    //     getData();
-    // }, [])
-
-    // const filterRooms = (selectedRange) => {
-    //     if (!selectedRange) {
-    //         return rooms; // Return all rooms if no range is selected
-    //     }
-
-    //     const [minPrice, maxPrice] = selectedRange.split("-").map(Number);
-    //     const filteredRooms = rooms.filter(room => room.pricePerNight >= minPrice && room.pricePerNight <= maxPrice);
-    //     return filteredRooms;
-    // };
-
     const handleFilterChange = (event) => {
         setSelectedRange(event.target.value);
     };
 
-    // const filteredRooms = filterRooms(selectedRange);
+    
 
 
 
