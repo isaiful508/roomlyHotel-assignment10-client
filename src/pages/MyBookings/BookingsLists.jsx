@@ -82,32 +82,74 @@ const BookingsLists = ({ item, index , booking, setBooking  }) => {
         });
     }
 
-    //handle update the date
+
     const handleUpdateDate = (event, _id) => {
         event.preventDefault();
-        setOpenModal(false)
-        // const date = event.target.value;
-        const date = event.target.elements.date.value;
-        console.log('input date', date)
-        // const id = booking[0]._id;
-
-
-        console.log(_id);
-
-
-        axios.patch(`http://localhost:5000/bookings/${_id}`, { date: date })
+        setOpenModal(false);
+        
+        // Extract date value from event target
+        const dateValue = event.target.elements.date.value;
+        
+        // Convert date string to a Date object
+        const date = new Date(dateValue);
+        
+        // Check if the date is valid
+        if (isNaN(date.getTime())) {
+            // Handle invalid date
+            console.error("Invalid date:", dateValue);
+            return;
+        }
+        
+        // Convert the date object to ISO string
+        const isoDateString = date.toISOString();
+    
+        axios.patch(`http://localhost:5000/bookings/${_id}`, { date: isoDateString })
             .then(data => {
-                console.log(data.data)
                 if (data.data.modifiedCount > 0) {
-                    toast.success("Updated Successfully")
-
+                    toast.success("Updated successfully");
+                    // Update the date in the bookings state
+                    setBooking(booking.map(booking => 
+                        booking._id === _id ? { ...booking, date: isoDateString } : booking
+                    ));
                 }
-
-            }).catch(error => {
-                console.error(error);
             })
-
+            .catch(error => {
+                console.error(error);
+            });
     }
+
+
+
+
+
+
+    //handle update the date
+    // const handleUpdateDate = (event, _id) => {
+    //     event.preventDefault();
+    //     setOpenModal(false)
+    //     // const date = event.target.value;
+    //     const date = event.target.elements.date.value;
+    //     console.log('input date', date)
+    //     // const id = booking[0]._id;
+        
+
+
+    //     console.log(_id);
+
+
+    //     axios.patch(`http://localhost:5000/bookings/${_id}`, { date: date })
+    //         .then(data => {
+    //             console.log(data.data)
+    //             if (data.data.modifiedCount > 0) {
+    //                 toast.success("Updated Successfully")
+
+    //             }
+
+    //         }).catch(error => {
+    //             console.error(error);
+    //         })
+
+    // }
 
 
     const handlePostReview = (event, _id) => {
