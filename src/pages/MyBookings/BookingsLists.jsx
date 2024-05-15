@@ -13,7 +13,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 
 
 
-const BookingsLists = ({ item, index }) => {
+const BookingsLists = ({ item, index , booking, setBooking  }) => {
     const { user } = useContext(AuthContext);
 
     // console.log(item);
@@ -46,15 +46,30 @@ const BookingsLists = ({ item, index }) => {
                             axios.patch(`http://localhost:5000/room-details/${id}`, { availability: 'Available' })
                                 .then(updateResponse => {
                                     const { data: updateData } = updateResponse;
-                                    console.log(updateData);
-                                    // for refreshing UI
-                                    // getData();
-                                    Swal.fire({
-                                        title: "Canceled!",
-                                        text: "Your booking has been canceled.",
-                                        icon: "success"
-                                    });
+                                    if (updateData.modifiedCount > 0) {
+                                        // Update the bookings state to remove the cancelled booking
+                                        setBooking(booking.filter(booking => booking._id !== id));
+                                        Swal.fire({
+                                            title: "Canceled!",
+                                            text: "Your booking has been canceled.",
+                                            icon: "success"
+                                        });
+                                    }
                                 })
+                        // if (data.deletedCount > 0) {
+                        //     axios.patch(`http://localhost:5000/room-details/${id}`, { availability: 'Available' })
+                        //         .then(updateResponse => {
+                        //             const { data: updateData } = updateResponse;
+                        //             console.log(updateData);
+                        //             // for refreshing UI
+                        //             // getData();
+                        //             Swal.fire({
+                        //                 title: "Canceled!",
+                        //                 text: "Your booking has been canceled.",
+                        //                 icon: "success"
+                        //             });
+                        //         })
+
                                 .catch(error => {
                                     console.error('Error updating room details:', error);
                                 });

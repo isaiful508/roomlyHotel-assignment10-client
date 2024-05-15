@@ -55,6 +55,8 @@ const MyBookings = () => {
                             key={item._id}
                             item={(item)}
                             index={index}
+                            booking={booking}
+                            setBooking={setBooking}
                         ></BookingsLists>)}
                     </tbody>
                 </table>
