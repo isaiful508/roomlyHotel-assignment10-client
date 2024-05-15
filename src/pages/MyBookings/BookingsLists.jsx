@@ -13,6 +13,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 
 
 
+
 const BookingsLists = ({ item, index, booking, setBooking }) => {
     const { user } = useContext(AuthContext);
 
@@ -27,6 +28,9 @@ const BookingsLists = ({ item, index, booking, setBooking }) => {
 
     //handle calcel booking
 
+
+
+
     const handleCancel = (id) => {
         Swal.fire({
             title: "Are you sure want to cancel?",
@@ -38,12 +42,12 @@ const BookingsLists = ({ item, index, booking, setBooking }) => {
             confirmButtonText: "Yes, Cancel it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/bookings/${id}`)
+                axios.delete(`https://roomly-server-assignment11.vercel.app/bookings/${id}`)
                     .then(response => {
                         const { data } = response;
-                        console.log(data);
+                        // console.log(data);
                         if (data.deletedCount > 0) {
-                            axios.patch(`http://localhost:5000/room-details/${id}`, { availability: 'Available' })
+                            axios.patch(`https://roomly-server-assignment11.vercel.app/room-details/${id}`, { availability: 'Available' })
                                 .then(updateResponse => {
                                     const { data: updateData } = updateResponse;
                                     if (updateData.modifiedCount > 0) {
@@ -71,6 +75,9 @@ const BookingsLists = ({ item, index, booking, setBooking }) => {
 
 
     //handle date updated
+
+
+
     const handleUpdateDate = (event, _id) => {
         event.preventDefault();
         setOpenModal(false);
@@ -91,7 +98,7 @@ const BookingsLists = ({ item, index, booking, setBooking }) => {
         // Convert the date object to ISO string
         const isoDateString = date.toISOString();
 
-        axios.patch(`http://localhost:5000/bookings/${_id}`, { date: isoDateString })
+        axios.patch(`https://roomly-server-assignment11.vercel.app/bookings/${_id}`, { date: isoDateString })
             .then(data => {
                 if (data.data.modifiedCount > 0) {
                     toast.success("Updated successfully");
@@ -118,9 +125,9 @@ const BookingsLists = ({ item, index, booking, setBooking }) => {
         const comment = form.comment.value;
         const date = form.date.value;
 
-       
 
-        
+
+
 
 
 
@@ -134,15 +141,15 @@ const BookingsLists = ({ item, index, booking, setBooking }) => {
 
         };
 
-        console.log(reviews);
+        // console.log(reviews);
 
         // Send the review data to the server
 
-        axios.post('http://localhost:5000/reviews', reviews)
+        axios.post('https://roomly-server-assignment11.vercel.app/reviews', reviews)
             .then((res) => {
                 // Handle success response
-                console.log(res.data);
-                if(res.data.insertedId){
+                // console.log(res.data);
+                if (res.data.insertedId) {
                     toast.success("Review Post Successfully")
                 }
             })

@@ -2,7 +2,7 @@ import logo from '../../assets/roomly_logo.png'
 
 const Footer = () => {
     return (
-        <footer className="footer p-10 bg-neutral text-neutral-content">
+        <footer className="footer lg:w-full md:w-full w-96 p-10 bg-neutral text-neutral-content">
             <aside>
                <img className='w-20' src={logo} alt="" />
                 <p className="text-xl jost-600">Roomly Luxurious Hotel<br />Providing reliable services since 1992</p>

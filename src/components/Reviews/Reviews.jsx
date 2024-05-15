@@ -25,13 +25,17 @@ const Reviews = () => {
 
     }, [])
     const getData = async () => {
-        const { data } = await axios(`http://localhost:5000/reviews`)
+        const { data } = await axios(`https://roomly-server-assignment11.vercel.app/reviews`)
         setReviews(data);
     }
-    console.log(reviews);
+    // console.log(reviews);
 
     return (
-        <div className="container mx-auto ">
+        <div
+        data-aos="zoom-in"
+        
+        data-aos-duration="1000"
+        className="container mx-auto ">
 
             <div>
                 <h1 className="text-2xl font-semibold text-center text-[#3665b8] jost-600 capitalize lg:text-3xl dark:text-white">

@@ -16,7 +16,10 @@ const FeatureRoomCard = ({ room }) => {
 
     return (
 
-        <div className="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+        <div
+        
+       
+        className="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
 
             <div className="px-4 py-2">
                 <h1 className="text-xl font-bold text-[#3665b8]  uppercase dark:text-white jost-600">{name}</h1>

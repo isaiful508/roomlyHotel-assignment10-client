@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
   //   setLoading(true);
   //   try {
   //     // Clear the JWT cookie on the server
-  //     await axios.post('http://localhost:5000/logout', {}, { withCredentials: true });
+  //     await axios.post('https://roomly-server-assignment11.vercel.app/logout', {}, { withCredentials: true });
   //     // Sign out the user from Firebase and return the promise
   //     return await signOut(auth);
 
@@ -82,18 +82,18 @@ const AuthProvider = ({ children }) => {
       const userEmail = currentUser?.email || user?.email
       const loggedUser = {email : userEmail}
       setUser(currentUser)
-      console.log('CurrentUser-->', currentUser)
+      // console.log('CurrentUser-->', currentUser)
       setLoading(false)
       if(currentUser){
         
-        axios.post('http://localhost:5000/jwt',loggedUser, { withCredentials: true })
+        axios.post('https://roomly-server-assignment11.vercel.app/jwt',loggedUser, { withCredentials: true })
         .then(res =>{
-          console.log('token res', res.data)
+          // console.log('token res', res.data)
         })
       }else{
-        axios.post('http://localhost:5000/logout', loggedUser, {withCredentials : true})
+        axios.post('https://roomly-server-assignment11.vercel.app/logout', loggedUser, {withCredentials : true})
         .then((res) =>{
-          console.log(res.data)
+          // console.log(res.data)
         })
       }
 

@@ -11,7 +11,7 @@ const Testimonials = ({ review }) => {
     } = review
 
     return (
-        <section className=" dark:bg-gray-900 bg-base-100 rounded-lg shadow-xl mt-6">
+        <section className=" dark:bg-gray-900 bg-base-100 rounded-lg shadow-xl mt-6 border">
             <div className="container px-6 py-10 mx-auto">
 
                 <div className="flex items-start max-w-6xl mx-auto mt-16">

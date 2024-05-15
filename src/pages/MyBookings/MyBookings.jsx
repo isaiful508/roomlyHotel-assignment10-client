@@ -20,7 +20,7 @@ const MyBookings = () => {
 
     }, [user])
     const getData = async () => {
-        const { data } = await axios(`http://localhost:5000/bookings/${user?.email}`,{withCredentials: true} )
+        const { data } = await axios(`https://roomly-server-assignment11.vercel.app/bookings/${user?.email}`,{withCredentials: true} )
         setBooking(data);
     }
 

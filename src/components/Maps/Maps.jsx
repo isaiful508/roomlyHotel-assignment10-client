@@ -7,9 +7,13 @@ import { RiHotelLine } from "react-icons/ri";
 
 const Maps = () => {
     return (
-        <div className="my-10 mt-20 flex justify-between items-center gap-6 container mx-auto">
+        <div
+       
+
+        className="my-10 mt-20 flex justify-between  lg:flex-row flex-col items-center gap-6 container mx-auto">
             <div className="text-[#3665b8]">
-                <h2 className="text-5xl jost-600">HOW TO FIND OUR HOTEL</h2>
+
+                <h2 className="lg:text-5xl text-2xl jost-600">HOW TO FIND OUR HOTEL</h2>
                 <p className="font-400 mt-4">Let us be your hosts as you create cherished memories and discover <br /> the true essence of Cox Bazar. Book your stay with us today and open the door to a world of comfort, charm, and heartfelt hospitality.</p>
 
                 <div className="flex mt-6 gap-4 text-[#eb865e]">

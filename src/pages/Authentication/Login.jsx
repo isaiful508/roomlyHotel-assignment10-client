@@ -36,14 +36,14 @@ const Login = () => {
         signIn(email, password)
             .then((result) => {
                 const loggedInUser = result.user;
-                console.log(loggedInUser);
+                // console.log(loggedInUser);
                 // const user = { email }
 
                 toast.success("Login Successfully")
 
 
                 //get access tokn
-                // axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                // axios.post('https://roomly-server-assignment11.vercel.app/jwt', user, { withCredentials: true })
                 //     .then(res => {
                 //         console.log(res.data)
                 //         if (res.data.success) {
@@ -79,20 +79,7 @@ const Login = () => {
                 toast.success("Login Successfully")
 
                 navigate(location?.state ? location.state : '/');
-                // const user = { email: googleUser.email }
-
-                // Send user data to the server to get a JWT token
-                // axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
-                //     .then((res) => {
-                //         console.log(res.data);
-                //         if (res.data.success) {
-                           
-                //         }
-                //     })
-                //     .catch(error => {
-                //         console.error('Error generating JWT:', error);
-                //         toast.error('Failed to log in with Google');
-                //     });
+              
 
             })
             .catch(error => console.error(error))
@@ -155,7 +142,7 @@ const Login = () => {
                     <div className="mt-6">
 
                         <button
-                            className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#3665b8]  hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 font-500 focus:ring-opacity-50">Sign in</button>
+                            className="w-full px-6 py-2 tracking-wide text-[#ff4338] rounded-md  font-normal font-400  border border-[#ff4338]  hover:text-white capitalize transition-colors duration-300 transform bg-[]  hover:bg-[#ff4338] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">Sign in</button>
 
                         <p className="mt-4 text-center text-gray-600 dark:text-gray-400 font-500">or sign in with</p>
 

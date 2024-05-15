@@ -58,10 +58,10 @@ const RoomDetails = () => {
 
     }, [])
     const getData = async () => {
-        const { data } = await axios(`http://localhost:5000/reviews/${_id}`)
+        const { data } = await axios(`https://roomly-server-assignment11.vercel.app/reviews/${_id}`)
         setReviews(data);
     }
-    console.log(reviews);
+    // console.log(reviews);
 
 
 
@@ -84,13 +84,13 @@ const RoomDetails = () => {
         };
 
         try {
-            const { data: updateData } = await axios.patch(`http://localhost:5000/room-details/${_id}`, { availability: 'Not-Available' });
-            console.log(updateData);
+            const { data: updateData } = await axios.patch(`https://roomly-server-assignment11.vercel.app/room-details/${_id}`, { availability: 'Not-Available' });
+            // console.log(updateData);
 
             if (updateData.modifiedCount === 1) { // Ensure the update was successful
                 setAvailability('Not-Available');
-                const { data } = await axios.post(`http://localhost:5000/bookings`, booking);
-                console.log(data);
+                const { data } = await axios.post(`https://roomly-server-assignment11.vercel.app/bookings`, booking);
+                // console.log(data);
                 Swal.fire({
                     icon: 'success',
                     title: 'Booking Confirmed!',
@@ -115,54 +115,6 @@ const RoomDetails = () => {
     };
 
 
-
-
-    // const handleBookRoom = async (e) => {
-    //     e.preventDefault();
-    //     setOpenModal(false)
-    //     const bookingDate = startDate;
-
-    //     const booking = {
-    //         _id,
-    //         customerName: user?.displayName,
-    //         customerEmail: user?.email,
-    //         roomName: name,
-    //         roomDetails: description,
-    //         price: pricePerNight,
-    //         date: bookingDate,
-    //         photo: image,
-
-    //     }
-
-    //     try {
-
-
-    //         const { data: updateData } = await axios.patch(`http://localhost:5000/room-details/${_id}`, { availability: 'Not-Available' });
-    //         console.log(updateData);
-
-    //         if (availability === 'Not-Available') {
-    //             toast.error("This Room already has been booked")
-
-    //         } else {
-    //             const { data } = await axios.post(`http://localhost:5000/bookings`, booking)
-    //             console.log(data);
-    //             Swal.fire({
-    //                 icon: 'success',
-    //                 title: 'Booking Confirmed!',
-    //                 text: 'Your booking has been successfully confirmed.',
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //             });
-    //         }
-
-
-
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-
-
-    // }
 
 
 

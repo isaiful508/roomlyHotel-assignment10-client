@@ -21,10 +21,11 @@ const RoomsCard = ({ room }) => {
 
 }, [])
 const getData = async () => {
-    const { data } = await axios(`http://localhost:5000/reviews/${_id}`)
+    const { data } = await axios(`https://roomly-server-assignment11.vercel.app/reviews/${_id}`)
     setReviews(data);
 }
-console.log(reviews);
+// console.log(reviews);
+
 
 
 

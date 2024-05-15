@@ -25,7 +25,7 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Home></Home>,
-                loader: () => fetch(`http://localhost:5000/rooms/`)
+                loader: () => fetch(`https://roomly-server-assignment11.vercel.app/rooms/`)
             },
             {
                 path: '/rooms',
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
                 element: <PrivateRoutes>
                     <RoomDetails></RoomDetails>
                 </PrivateRoutes>,
-                loader: ({ params }) => fetch(`http://localhost:5000/room-details/${params.id}`, {credentials: 'include'})
+                loader: ({ params }) => fetch(`https://roomly-server-assignment11.vercel.app/room-details/${params.id}`, {credentials: 'include'})
             }
 
         ]

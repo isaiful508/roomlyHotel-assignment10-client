@@ -12,7 +12,7 @@ const Rooms = () => {
 
     useEffect(() => {
         const getData = async () => {
-          const response = await axios.get("http://localhost:5000/rooms", {
+          const response = await axios.get("https://roomly-server-assignment11.vercel.app/rooms", {
             params: selectedRange ? {
               minPrice: selectedRange.split("-")[0],
               maxPrice: selectedRange.split("-")[1]
@@ -48,13 +48,13 @@ const Rooms = () => {
             </div>
 
             <div className="text-center mt-6 mb-8">
-                <h2 className="text-5xl bona-nova-regular">Discover Tranquility in <br /> Our <span className="text-[#ff4338]">Roomly</span> Hotel Rooms</h2>
+                <h2 className="lg:text-5xl text-2xl bona-nova-regular">Discover Tranquility in <br /> Our <span className="text-[#ff4338]">Roomly</span> Hotel Rooms</h2>
 
                 <p className="mt-4 font-400">Whether you’re a globetrotting adventurer, a business executive on the go, or a leisure traveler seeking a peaceful retreat, <br /> our airport rooms provide a perfect oasis within your journey.</p>
             </div>
 
 
-            <div className=" grid border-2 border-[] rounded-lg p-4  md:gap-8  grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div className=" grid border-2 rounded-lg p-4  md:gap-8  grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {
                     rooms.map(room => <RoomsCard
                         key={room._id}

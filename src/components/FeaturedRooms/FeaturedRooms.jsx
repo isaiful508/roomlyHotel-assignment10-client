@@ -8,12 +8,17 @@ const FeaturedRooms = () => {
    
     const featuresRooms = useLoaderData();
     const fourRooms = featuresRooms.slice(0, 4)
-    console.log(fourRooms);
+    // console.log(fourRooms);
 
   
 
     return (
-        <div className="container lg:w-full md:w-full w-96 mx-auto mt-10 mb-10">
+        <div
+        data-aos="zoom-in"
+        
+        data-aos-duration="1000"
+
+        className="container lg:w-full md:w-full w-96 mx-auto mt-10 mb-10">
             <div className="text-center mb-6 ml-8 p-4 lg:p-4 ">
                 <h2 className="text-4xl text-[#3665b8]  jost-600">Features Rooms</h2>
                 <p className="sora-500 mt-2 font-500 text-[#eb865e]">Here are the special roms for Out importand customers.Lets take a look</p>
