@@ -9,31 +9,48 @@ const Rooms = () => {
     const [rooms, setRooms] = useState([]);
     const [selectedRange, setSelectedRange] = useState("");
 
+
     useEffect(() => {
         const getData = async () => {
-            const { data } = await axios(`http://localhost:5000/rooms`)
-            setRooms(data);
+          const response = await axios.get("http://localhost:5000/rooms", {
+            params: selectedRange ? {
+              minPrice: selectedRange.split("-")[0],
+              maxPrice: selectedRange.split("-")[1]
+            } : {}
+          });
+          setRooms(response.data);
+        };
+        getData();
+      }, [selectedRange]);
+
+
+
+
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         const { data } = await axios(`http://localhost:5000/rooms`)
+    //         setRooms(data);
             
 
-        }
-        getData();
-    }, [])
+    //     }
+    //     getData();
+    // }, [])
 
-    const filterRooms = (selectedRange) => {
-        if (!selectedRange) {
-            return rooms; // Return all rooms if no range is selected
-        }
+    // const filterRooms = (selectedRange) => {
+    //     if (!selectedRange) {
+    //         return rooms; // Return all rooms if no range is selected
+    //     }
 
-        const [minPrice, maxPrice] = selectedRange.split("-").map(Number);
-        const filteredRooms = rooms.filter(room => room.pricePerNight >= minPrice && room.pricePerNight <= maxPrice);
-        return filteredRooms;
-    };
+    //     const [minPrice, maxPrice] = selectedRange.split("-").map(Number);
+    //     const filteredRooms = rooms.filter(room => room.pricePerNight >= minPrice && room.pricePerNight <= maxPrice);
+    //     return filteredRooms;
+    // };
 
     const handleFilterChange = (event) => {
         setSelectedRange(event.target.value);
     };
 
-    const filteredRooms = filterRooms(selectedRange);
+    // const filteredRooms = filterRooms(selectedRange);
 
 
 
@@ -65,7 +82,7 @@ const Rooms = () => {
 
             <div className=" grid border-2 border-[] rounded-lg p-4  md:gap-8  grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {
-                    filteredRooms.map(room => <RoomsCard
+                    rooms.map(room => <RoomsCard
                         key={room._id}
                         room={room}
                     ></RoomsCard>)
