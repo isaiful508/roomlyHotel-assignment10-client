@@ -13,7 +13,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 
 
 
-const BookingsLists = ({ item, index , booking, setBooking  }) => {
+const BookingsLists = ({ item, index, booking, setBooking }) => {
     const { user } = useContext(AuthContext);
 
     // console.log(item);
@@ -56,7 +56,7 @@ const BookingsLists = ({ item, index , booking, setBooking  }) => {
                                         });
                                     }
                                 })
-                        
+
                                 .catch(error => {
                                     console.error('Error updating room details:', error);
                                 });
@@ -74,29 +74,29 @@ const BookingsLists = ({ item, index , booking, setBooking  }) => {
     const handleUpdateDate = (event, _id) => {
         event.preventDefault();
         setOpenModal(false);
-        
-        
+
+
         const dateValue = event.target.elements.date.value;
-        
-        
+
+
         const date = new Date(dateValue);
-        
-       
+
+
         if (isNaN(date.getTime())) {
-           
+
             console.error("Invalid date:", dateValue);
             return;
         }
-        
+
         // Convert the date object to ISO string
         const isoDateString = date.toISOString();
-    
+
         axios.patch(`http://localhost:5000/bookings/${_id}`, { date: isoDateString })
             .then(data => {
                 if (data.data.modifiedCount > 0) {
                     toast.success("Updated successfully");
                     // Update the date in the bookings state
-                    setBooking(booking.map(booking => 
+                    setBooking(booking.map(booking =>
                         booking._id === _id ? { ...booking, date: isoDateString } : booking
                     ));
                 }
@@ -116,28 +116,41 @@ const BookingsLists = ({ item, index , booking, setBooking  }) => {
         const username = form.name.value;
         const rating = form.rating.value;
         const comment = form.comment.value;
-        const timestamp = form.date.value;
+        const date = form.date.value;
 
-        const reviewData = {
-           username,
+       
+
+        
+
+
+
+        const reviews = {
+            username,
             rating,
             comment,
-            timestamp
+            roomId: _id,
+            timestamp: date,
+            photo: user?.photoURL
+
         };
-    
-        console.log(_id, reviewData);
-    
+
+        console.log(reviews);
+
         // Send the review data to the server
-        axios.patch(`http://localhost:5000/room-details/${_id}`, reviewData)
-            .then((data) => {
+
+        axios.post('http://localhost:5000/reviews', reviews)
+            .then((res) => {
                 // Handle success response
-                console.log(data.data);
+                console.log(res.data);
+                if(res.data.insertedId){
+                    toast.success("Review Post Successfully")
+                }
             })
             .catch(error => {
                 // Handle error
                 console.error('Error sending review data:', error);
             });
-        
+
 
 
 
@@ -214,15 +227,15 @@ const BookingsLists = ({ item, index , booking, setBooking  }) => {
 
 
                         <form
-                            onSubmit={() =>handlePostReview(event, _id)} className="h-[400px]" >
+                            onSubmit={() => handlePostReview(event, _id)} className="h-[400px]" >
 
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">User Name</span>
                                 </label>
                                 <input
-                                name="name"
-                                type="text" defaultValue={user?.displayName} className="input input-bordered" />
+                                    name="name"
+                                    type="text" defaultValue={user?.displayName} className="input input-bordered" />
                             </div>
 
 
@@ -243,7 +256,7 @@ const BookingsLists = ({ item, index , booking, setBooking  }) => {
                                     <option value="3">3</option>
                                     <option value="4">4</option>
                                     <option value="5">5</option>
-                                   
+
                                 </select>
                             </div>
 

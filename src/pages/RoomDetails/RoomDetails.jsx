@@ -6,8 +6,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
+import { FcRating } from "react-icons/fc";
 
 
 
@@ -21,8 +22,12 @@ const RoomDetails = () => {
 
 
     const [openModal, setOpenModal] = useState(false);
+    const [openModal2, setOpenModal2] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
     const [availability, setAvailability] = useState(room.availability);
+    const [reviews, setReviews] = useState([])
+
+
 
 
 
@@ -43,6 +48,23 @@ const RoomDetails = () => {
     } = room || {};
 
     const availabilityColor = availability === 'Available' ? 'text-green-700' : 'text-red-700';
+
+
+    //reviews data fetch by room id
+    useEffect(() => {
+
+
+        getData();
+
+    }, [])
+    const getData = async () => {
+        const { data } = await axios(`http://localhost:5000/reviews/${_id}`)
+        setReviews(data);
+    }
+    console.log(reviews);
+
+
+
 
 
     const handleBookRoom = async (e) => {
@@ -88,7 +110,9 @@ const RoomDetails = () => {
 
 
 
-
+    const toggleReviewsModal = () => {
+        setOpenModal2(!openModal2);
+    };
 
 
 
@@ -165,13 +189,13 @@ const RoomDetails = () => {
                     <p className="text-[#3665b8]">Availability :  <span className={`${availabilityColor}`}>{availability}</span></p>
                     <p className="text-[#3665b8]">Room Size : <span className="text-[#eb865e]"> {roomSize} </span></p>
 
-                   {specialOffers && 
-                   
-                   <div>
-                        <h2 className="text-2xl text-[#3665b8]">Special Offers: </h2>
+                    {specialOffers &&
 
-                        <p className="text-[#eb865e]">{specialOffers}</p>
-                    </div>
+                        <div>
+                            <h2 className="text-2xl text-[#3665b8]">Special Offers: </h2>
+
+                            <p className="text-[#eb865e]">{specialOffers}</p>
+                        </div>
                     }
 
 
@@ -200,8 +224,50 @@ const RoomDetails = () => {
                     </div>
 
                     {/* reviews sewction */}
+                    <div className="">
+                        <button
+                            onClick={toggleReviewsModal}
+                            className=" w-full px-6 py-2 tracking-wide text-[#ff4338] rounded-md  font-normal font-400  border border-[#ff4338]  hover:text-white capitalize transition-colors duration-300 transform bg-[]  hover:bg-[#ff4338] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+                        >
+                            See Reviews
+                        </button>
+                    </div>
 
-                    {/* {
+                    {/* Reviews section */}
+                    {reviews && (
+                        <Modal show={openModal2} onClose={toggleReviewsModal}>
+                            <Modal.Header className="underline jost-600">
+                                Reviews for {name}
+                            </Modal.Header>
+                            <Modal.Body>
+                                {reviews.map((review, idx) => (
+                                    <div key={idx} className="space-y-2">
+                                        <p className="text-2xl font-500">Clients Name: {review.username}</p>
+                                        <p className="font-500">Comments :  {review.comment}</p>
+
+                                        <div className="flex items-center gap-2">
+                                        <p>{review.rating}
+                                        
+                                        </p>
+                                        <FcRating></FcRating> 
+                                        </div>
+
+                                        <p>{review.timestamp}</p>
+                                    </div>
+                                ))}
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button onClick={toggleReviewsModal}>Close</Button>
+                            </Modal.Footer>
+                        </Modal>
+                    )}
+
+
+
+
+
+                    {/* {reviews &&
+
                     reviews.map((review, idx) => <div key={idx}>
                         <p>{review.username}</p>
                         <p>{review.comment}</p>
