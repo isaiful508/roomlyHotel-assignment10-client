@@ -1,4 +1,4 @@
-# Hotel Rooms Booking Platform
+# Roomly Hotel
 
 Live Site URLs:
 - [Firebase](https://roomly-assignment11.web.app/)
