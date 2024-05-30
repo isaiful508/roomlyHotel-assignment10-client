@@ -186,6 +186,7 @@ const RoomDetails = () => {
                     </div>
 
                     {/* Reviews section */}
+                    
                     {reviews && (
                         <Modal show={openModal2} onClose={toggleReviewsModal}>
                             <Modal.Header className="underline jost-600">
@@ -215,18 +216,6 @@ const RoomDetails = () => {
                     )}
 
 
-
-
-
-                    {/* {reviews &&
-
-                    reviews.map((review, idx) => <div key={idx}>
-                        <p>{review.username}</p>
-                        <p>{review.comment}</p>
-                        <p>{review.timestamp}</p>
-                        
-                    </div>)
-                   } */}
 
 
 

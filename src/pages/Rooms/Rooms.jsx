@@ -8,20 +8,23 @@ const Rooms = () => {
 
     const [rooms, setRooms] = useState([]);
     const [selectedRange, setSelectedRange] = useState("");
+    const [search, setSearch] = useState('');
+
 
 
     useEffect(() => {
         const getData = async () => {
-          const response = await axios.get("https://roomly-server-assignment11.vercel.app/rooms", {
-            params: selectedRange ? {
-              minPrice: selectedRange.split("-")[0],
-              maxPrice: selectedRange.split("-")[1]
-            } : {}
-          });
-          setRooms(response.data);
+            const response = await axios.get("https://roomly-server-assignment11.vercel.app/rooms", {
+                params: {
+                    minPrice: selectedRange ? selectedRange.split("-")[0] : undefined,
+                    maxPrice: selectedRange ? selectedRange.split("-")[1] : undefined,
+                    search: search || undefined
+                }
+            });
+            setRooms(response.data);
         };
         getData();
-      }, [selectedRange]);
+    }, [selectedRange, search]);
 
 
 
@@ -30,20 +33,43 @@ const Rooms = () => {
         setSelectedRange(event.target.value);
     };
 
-    
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        const searchText = e.target.search.value;
+        setSearch(searchText);
+
+    };
+
+
+
 
     return (
         <div className="container mx-auto">
 
-            <div>
-                <div className="flex justify-end mt-6 font-500">
-                    
-                <select className="border-2 p-2 rounded-lg" onChange={handleFilterChange}>
-                    <option  value="">Filter By Price</option>
-                    <option value="100-200">100-200</option>
-                    <option value="200-500">200-500</option>
-                    {/* Add more options for other price ranges */}
-                </select>
+            <div className="flex justify-between items-center mt-6 mb-4">
+                <div className=" text-black  mt-10 font-500">
+
+                    <form onSubmit={handleSearch}>
+
+                        <input className="rounded-md border border-[#ff4338] py-2 px-6" placeholder="Search Rooms" type="text" name="search" />
+
+                        <input className="px-6 ml-2 py-2 tracking-wide text-[#ff4338] rounded-md  font-normal font-400  border border-[#ff4338]  hover:text-white capitalize transition-colors duration-300 transform bg-[]  hover:bg-[#ff4338] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" type="submit" value="Search" />
+
+                    </form>
+
+                </div>
+
+                <div>
+                    <div className="font-500">
+
+                        <select className="border-2 p-2 rounded-lg " onChange={handleFilterChange}>
+                            <option value="">Filter By Price</option>
+                            <option value="100-200">100-200</option>
+                            <option value="200-500">200-500</option>
+                            {/* Add more options for other price ranges */}
+                        </select>
+                    </div>
                 </div>
             </div>
 
